@@ -8,8 +8,17 @@ function App() {
   const [shown, setShown] = useState(false);
   
   function showStats() {
+    console.log("Clicked stats button!");
     setShown((prevShown) => !prevShown);
+    socket.emit('statistics');
   }
+  
+  useEffect(() => {
+    socket.on('statistics', (data) => {
+      console.log('Statistics event received!');
+      console.log(data);
+    });
+  }, []);
   
   return (
     <div className="database-info-holder">
