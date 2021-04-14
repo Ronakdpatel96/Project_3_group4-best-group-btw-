@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import './App.css';
 
+const socket = io();
+
 function App() {
+  const [shown, setShown] = useState(false);
+  
+  function showStats() {
+    setShown((prevShown) => !prevShown);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="database-info-holder">
+      <button type="button" onClick={showStats}>
+            Show/Hide Stats
+      </button>
+      { shown === true ? (
+        <div className="database-info">
+          TEST!
+        </div>
+      ) : null }
     </div>
   );
 }
