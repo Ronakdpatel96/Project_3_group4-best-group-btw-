@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const socket = io();

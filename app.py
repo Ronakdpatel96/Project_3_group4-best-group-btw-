@@ -10,6 +10,13 @@ load_dotenv(find_dotenv())
 
 APP = Flask(__name__, static_folder='./build/static')
 
+# Point SQLAlchemy to your Heroku database
+APP.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# Gets rid of a warning
+APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+DB = SQLAlchemy(APP)
+
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
@@ -37,7 +44,8 @@ def on_disconnect():
 @SOCKETIO.on('statistics')
 def on_statistics():
     ''' When stats button is clicked, it will display database info '''
-    data = requests.get('https://my-json-server.typicode.com/krojas64/490-test-db/users')
+    d = requests.get('https://my-json-server.typicode.com/krojas64/490-test-db/users')
+    data = d.json()
     print(str(data))
     SOCKETIO.emit('statistics', data, broadcast=True, include_self=False)
     
