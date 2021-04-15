@@ -8,9 +8,10 @@ function App() {
   const [shown, setShown] = useState(false);
   
   function showStats() {
+    const name = "default_name";
     console.log("Clicked stats button!");
     setShown((prevShown) => !prevShown);
-    socket.emit('statistics');
+    socket.emit('statistics', name);
   }
   
   useEffect(() => {
