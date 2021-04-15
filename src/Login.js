@@ -16,25 +16,40 @@ export function Login() {
             </head>
             
             <body>
-                <h1> Login here: </h1>
-                <div class="google">
-                    <div class = "box">
-                <GoogleLogin
-                        buttonText="Login"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                        cookiePolicy={'single_host_origin'}
-                    />
+            
+                <h1 class="title">Penalty Chess</h1>
+            
+                <div class="box">
+                    <div class="google">
+                
+                    <h4>User login:</h4>
+                    
                 <br/>
                 <br/>
-                <form id="login-form">
-                    <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username"/>
-                    <br/>
-                    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password"/>
-                    <br/>
-                    <input type="submit" value="Login" id="login-form-submit"/>
-                    <input type="submit" value="Create Account" />
-                </form>
+                
+                        <form id="login-form">
+                            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username"/>
+                            
+                            <br/>
+                            <br/>
+                            
+                            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password"/>
+                                
+                            <br/>
+                            <br/>
+                                
+                            <input type="submit" value="Login" id="login-form-submit"/>
+                            <input type="submit" value="Create Account" />
+                        </form>
+                            
+                            <br/>
+                            
+                            <GoogleLogin
+                            buttonText="Login"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                        />
                     </div>
                 </div>
             </body>
