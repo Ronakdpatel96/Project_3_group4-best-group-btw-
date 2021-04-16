@@ -12,7 +12,11 @@ export function Login() {
         const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
         
         axios.get(url)
-            .then(response => { console.log(response['data']) });
+            .then(response => { console.log(response['data']['given_name']) });
+            
+        axios.get(url)
+            .then(response => { console.log(response['data']['email']) });
+
     }
     
     return(
