@@ -39,7 +39,8 @@
 
 
 .title{
-  text-align:center;
+  text-align: center;
+  color: white;
 }
 
 .google{
@@ -53,4 +54,10 @@
   padding: 50px;
   bottom: 10px;
   margin: auto;
+  background-color:white;
+}
+
+body{
+  background-image: url("chessImage.jpg");
+  background-size: cover;
 }

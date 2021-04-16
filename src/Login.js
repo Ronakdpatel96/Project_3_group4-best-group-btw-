@@ -1,12 +1,20 @@
 import './App.css';
 import { GoogleLogin } from 'react-google-login';
+import axios from 'axios';
 
-
-const responseGoogle = (response) => {
-  console.log(response);
-}
+//https://oauth2.googleapis.com/tokeninfo?id_token={token}
 
 export function Login() {
+    
+    const responseGoogle = (response) => {
+        console.log(response['tokenId']);
+        
+        const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
+        
+        axios.get(url)
+            .then(response => { console.log(response['data']) });
+    }
+    
     return(
         <div class="login">
             <head>
@@ -16,42 +24,26 @@ export function Login() {
             </head>
             
             <body>
-            
                 <h1 class="title">Penalty Chess</h1>
+                
+                <br/>
+                <br/>
+                <br/>
             
                 <div class="box">
                     <div class="google">
                 
                     <h4>User login:</h4>
                     
-                <br/>
-                <br/>
-                
-                        <form id="login-form">
-                            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username"/>
-                            
                             <br/>
-                            <br/>
-                            
-                            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password"/>
-                                
-                            <br/>
-                            <br/>
-                                
-                            <input type="submit" value="Login" id="login-form-submit"/>
-                            <input type="submit" value="Create Account" />
-                        </form>
-                            
-                            <br/>
-                            
                             <GoogleLogin
-                            buttonText="Login"
+                            buttonText="Login with Google"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
                         />
+                        </div>
                     </div>
-                </div>
             </body>
         </div>
 );
