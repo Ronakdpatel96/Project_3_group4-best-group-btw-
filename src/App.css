@@ -41,21 +41,21 @@
 .title{
   text-align: center;
   color: white;
+  font-weight:Bold;
+  font-size: 100px;
+  font-family: Helvetica, sans-serif;
 }
 
 .google{
   text-align:center;
+  color:white;
 }
 
-.box{
-  width: 250px;
-  length: 350px;
-  border: 2px solid black;
-  padding: 50px;
-  bottom: 10px;
-  margin: auto;
-  background-color:white;
+.loggedIn{
+  text-align:right;
+  color:white;
 }
+
 
 body{
   background-image: url("chessImage.jpg");
