@@ -1,5 +1,6 @@
 import './App.css';
 import { GoogleLogin } from 'react-google-login';
+import { Sample } from './board.js';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,9 +21,6 @@ export function Login() {
         console.log("Time to change page"); //will have to link this to switchPage to try and switch the page to the next one
         }
         
-    function switchPage(){
-        window.location.assign('/board.js'); //trying to test out a way to change the page effectively
-    } 
     
     const responseGoogle = (response) => {
         console.log(response);
@@ -66,6 +64,8 @@ export function Login() {
                     <h4>{emailName}</h4>
                 </div>
                 
+                {Login == true ? null : (
+                <div class='Page1'>
                 <h1 class="title">Penalty Chess</h1>
                 
                 <br/>
@@ -86,6 +86,15 @@ export function Login() {
                         />
                         </div>
                     </div>
+                </div> )}
+                
+                <div class='Page2'>
+                {Login === false ? null : (
+                    <div>
+                        <Sample Sample/>
+                    </div> )}
+                
+                </div>
             </body>
         </div> 
 );
