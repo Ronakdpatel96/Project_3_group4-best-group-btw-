@@ -55,6 +55,17 @@ def index(filename):
 def on_connect():
     ''' When a client connects from this Socket connection, this function is run '''
     print('User connected!')
+    stats = Person.query.filter_by(username='Bill').first()
+    stats_info = []
+    stats_info.append(stats.username)
+    stats_info.append(stats.email)
+    stats_info.append(stats.win)
+    stats_info.append(stats.loss)
+    stats_info.append(stats.tie)
+    stats_info.append(stats.rank)
+    print(stats)
+    print(stats_info)
+    SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
 
 
 @SOCKETIO.on('disconnect')
@@ -67,10 +78,15 @@ def on_disconnect():
 def on_statistics(name):
     ''' When stats button is clicked, it will display mock database info '''
     print(name)
-    d = requests.get('https://my-json-server.typicode.com/krojas64/490-test-db/users')
-    data = d.json()
-    print(str(data))
-    SOCKETIO.emit('statistics', data, broadcast=True, include_self=False)
+    stats = Person.query.filter_by(username='Bill').first()
+    stats_info = []
+    stats_info.append(stats.username)
+    stats_info.append(stats.win)
+    stats_info.append(stats.loss)
+    stats_info.append(stats.tie)
+    stats_info.append(stats.rank)
+    print(stats)
+    SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
     
 # Event that will update the two users' databases after a game has ended
 @SOCKETIO.on('game-end')

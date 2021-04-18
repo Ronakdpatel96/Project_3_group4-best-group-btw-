@@ -6,29 +6,40 @@ const socket = io();
 
 function App() {
   const [shown, setShown] = useState(false);
-  
+  const [stats, setStats] = useState([]);
+
   function showStats() {
-    const name = "default_name";
-    console.log("Clicked stats button!");
     setShown((prevShown) => !prevShown);
-    socket.emit('statistics', name);
   }
-  
+
   useEffect(() => {
-    socket.on('statistics', (data) => {
+    socket.on('statistics', (statsInfo) => {
       console.log('Statistics event received!');
-      console.log(data);
+      console.log(statsInfo);
+      setStats(statsInfo);
     });
   }, []);
-  
+
   return (
     <div className="database-info-holder">
-      <button type="button" onClick={showStats}>
-            Show/Hide Stats
-      </button>
+      <button type="button" onClick={showStats}> Show/Hide Stats </button>
       { shown === true ? (
         <div className="database-info">
-          TEST!
+          Name:&nbsp;
+          {stats[0]}
+          <br />
+          Email:&nbsp;
+          {stats[1]}
+          <br />
+          Record:&nbsp;
+          {stats[2]}
+          -
+          {stats[3]}
+          -
+          {stats[4]}
+          <br />
+          Rank:&nbsp;
+          {stats[5]}
         </div>
       ) : null }
     </div>
