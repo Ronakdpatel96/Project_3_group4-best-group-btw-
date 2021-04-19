@@ -86,6 +86,9 @@ def on_login(data):
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
 
+@SOCKETIO.on('chat')
+def on_chat(data):
+    SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
     
 # Event that will update the two users' databases after a game has ended
 @SOCKETIO.on('game-end')
