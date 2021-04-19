@@ -69,11 +69,13 @@ def database_check(user,email_address):
         DB.session.add(new_user)
         DB.session.commit()
         return new_user
-    return user
+    return check
     
 @SOCKETIO.on('login')
 def on_login(data):
     ''' When a client logs in, check if user is in database and send relevant info '''
+    print(data['user'])
+    print(data['email'])
     stats = database_check(data['user'], data['email'])
     stats_info = []
     stats_info.append(stats.username)

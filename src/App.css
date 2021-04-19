@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+
+.title{
+  text-align: center;
+  color: white;
+  font-weight:Bold;
+  font-size: 100px;
+  font-family: Helvetica, sans-serif;
+}
+
+.google{
+  text-align:center;
+  color:white;
+}
+
+.loggedIn{
+  text-align:right;
+  color:white;
+}
+
+
+body{
+  background-image: url("chessImage.jpg");
+  background-size: cover; 
+}
+
+.Page2{
+  color:white;
+}
+
+.database-info{
+  color:white;
+}
