@@ -1,5 +1,4 @@
 import os
-import requests
 from flask import Flask, send_from_directory, json
 from flask_socketio import SocketIO
 from flask_cors import CORS
