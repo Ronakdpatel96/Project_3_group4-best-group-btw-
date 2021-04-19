@@ -3,12 +3,14 @@ import { GoogleLogin } from 'react-google-login';
 import { Sample } from './board.js';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import io from 'socket.io-client';
 
 //https://oauth2.googleapis.com/tokeninfo?id_token={token}
+const socket = io();
 
 export function Login() {
     const [Login, setLogin] = useState(false);
+    const [page, setPage] = useState(false);
     const [user, setUser] = useState([]);
     const [emailName, setEmail] = useState([]);
     
@@ -19,6 +21,8 @@ export function Login() {
         console.log(user);
         console.log(emailName);         //User and email would be used to update the database.
         console.log("Time to change page"); //will have to link this to switchPage to try and switch the page to the next one
+        socket.emit('login', { user: user , email: emailName});
+        setLogin(false);
         }
         
     
@@ -46,7 +50,9 @@ export function Login() {
                 console.log("emailUser",emailUser);
                 setEmail(setName => emailUser);
                 setLogin(true);
+                setPage(true);
             });
+            
         //Need to change the webpage to the next page once logged in
         };
     
@@ -64,7 +70,7 @@ export function Login() {
                     <h4>{emailName}</h4>
                 </div>
                 
-                {Login == true ? null : (
+                {page == true ? null : (
                 <div class='Page1'>
                 <h1 class="title">Penalty Chess</h1>
                 
@@ -89,7 +95,7 @@ export function Login() {
                 </div> )}
                 
                 <div class='Page2'>
-                {Login === false ? null : (
+                {page === false ? null : (
                     <div>
                         <Sample Sample/>
                     </div> )}
