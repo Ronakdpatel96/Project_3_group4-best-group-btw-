@@ -55,7 +55,26 @@ def index(filename):
 def on_connect():
     ''' When a client connects from this Socket connection, this function is run '''
     print('User connected!')
-    stats = Person.query.filter_by(username='Bill').first()
+
+
+@SOCKETIO.on('disconnect')
+def on_disconnect():
+    ''' When a client disconnects from this Socket connection, this function is run '''
+    print('User disconnected!')
+    
+def database_check(user,email_address):
+    check = Person.query.filter_by(username=user).first()
+    if check is None:
+        new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
+        DB.session.add(new_user)
+        DB.session.commit()
+        return new_user
+    return user
+    
+@SOCKETIO.on('login')
+def on_login(data):
+    ''' When a client logs in, check if user is in database and send relevant info '''
+    stats = database_check(data['user'], data['email'])
     stats_info = []
     stats_info.append(stats.username)
     stats_info.append(stats.email)
@@ -67,26 +86,6 @@ def on_connect():
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
 
-
-@SOCKETIO.on('disconnect')
-def on_disconnect():
-    ''' When a client disconnects from this Socket connection, this function is run '''
-    print('User disconnected!')
-
-    
-@SOCKETIO.on('statistics')
-def on_statistics(name):
-    ''' When stats button is clicked, it will display mock database info '''
-    print(name)
-    stats = Person.query.filter_by(username='Bill').first()
-    stats_info = []
-    stats_info.append(stats.username)
-    stats_info.append(stats.win)
-    stats_info.append(stats.loss)
-    stats_info.append(stats.tie)
-    stats_info.append(stats.rank)
-    print(stats)
-    SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
     
 # Event that will update the two users' databases after a game has ended
 @SOCKETIO.on('game-end')
