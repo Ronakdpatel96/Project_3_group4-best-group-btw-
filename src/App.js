@@ -49,6 +49,8 @@ function App() {
           <br />
           Rank:&nbsp;
           {stats[5]}
+          <br />
+          {stats[6]}
         </div>
       ) : null }
     </div>

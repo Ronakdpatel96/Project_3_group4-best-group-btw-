@@ -17,7 +17,6 @@ APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 DB = SQLAlchemy(APP)
 
-# For testing purposes, remember to update this later
 class Person(DB.Model):
     ''' Defines what a person is '''
     __table_args__ = {'extend_existing': True}
@@ -32,11 +31,6 @@ class Person(DB.Model):
         return '<Person %r>' % self.username
 
 DB.create_all()
-
-#new_user = Person(username="Bill", email="bill355@website.com", win=5, loss=2, tie=1, rank=52)
-#DB.session.add(new_user)
-#DB.session.commit()
-# End of testing code
 
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 SOCKETIO = SocketIO(APP,
@@ -70,7 +64,18 @@ def database_check(user, email_address):
         DB.session.add(new_user)
         DB.session.commit()
         return new_user
-    return user
+    return check
+    
+def add_rank_statement(rank):
+    ''' Page tells the user how they are doing '''
+    if rank == 0:
+        return "Just starting out."
+    elif rank > 0 and rank < 10:
+        return "Got a few wins to your name"
+    elif rank > 10 and rank < 35:
+        return "Getting really good at the game now"
+    elif rank > 35:
+        return "You are a champion!"
 
 @SOCKETIO.on('login')
 def on_login(data):
@@ -83,6 +88,7 @@ def on_login(data):
     stats_info.append(stats.loss)
     stats_info.append(stats.tie)
     stats_info.append(stats.rank)
+    stats_info.append(add_rank_statement(stats.rank))
     print(stats)
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
