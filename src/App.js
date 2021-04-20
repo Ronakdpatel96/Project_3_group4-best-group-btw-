@@ -54,7 +54,6 @@ function App() {
           {stats[6]}
         </div>
       ) : null }
-      <Chat />
     </div>
     </div>
   );
