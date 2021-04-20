@@ -4,6 +4,8 @@ import { Sample } from './board.js';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import BlindChess from './chessboard.js';
+import Chat from './chat.js';
 
 //https://oauth2.googleapis.com/tokeninfo?id_token={token}
 const socket = io();
@@ -96,8 +98,13 @@ export function Login() {
                 
                 <div class='Page2'>
                 {page === false ? null : (
-                    <div>
-                        <Sample Sample/>
+                    <div class="chessBoard">
+                        <div className="board">
+                            <BlindChess/>
+                        </div>
+                        <div className="chat">
+                            <Chat className="chat"/>
+                        </div>
                     </div> )}
                 
                 </div>

@@ -31,7 +31,7 @@ function App() {
     </div>
     
     <div className="database-info-holder">
-      <button type="button" onClick={showStats}> Show/Hide Stats </button>
+      <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
       { shown === true ? (
         <div className="database-info">
           Name:&nbsp;

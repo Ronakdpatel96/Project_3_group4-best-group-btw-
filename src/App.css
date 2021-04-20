@@ -69,3 +69,19 @@ body{
 .database-info{
   color:white;
 }
+
+.chessboard{
+  justify-content: center;
+  align-items: center;
+}
+
+.database-info-holder{
+  text-align:center;
+}
+
+.chat{
+  text-align:right;
+}
+.board{
+  text-align:center;
+}
