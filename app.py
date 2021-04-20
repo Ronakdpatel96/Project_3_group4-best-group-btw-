@@ -1,5 +1,5 @@
+''' App that acts as a server for App.js'''
 import os
-import requests
 from flask import Flask, send_from_directory, json
 from flask_socketio import SocketIO
 from flask_cors import CORS
@@ -30,7 +30,7 @@ class Person(DB.Model):
 
     def __repr__(self):
         return '<Person %r>' % self.username
-        
+
 DB.create_all()
 
 #new_user = Person(username="Bill", email="bill355@website.com", win=5, loss=2, tie=1, rank=52)
@@ -43,7 +43,7 @@ SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
-                    
+
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
 def index(filename):
@@ -61,21 +61,20 @@ def on_connect():
 def on_disconnect():
     ''' When a client disconnects from this Socket connection, this function is run '''
     print('User disconnected!')
-    
-def database_check(user,email_address):
+
+def database_check(user, email_address):
+    ''' Checks if a user is already in the database'''
     check = Person.query.filter_by(username=user).first()
     if check is None:
         new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
         DB.session.add(new_user)
         DB.session.commit()
         return new_user
-    return check
-    
+    return user
+
 @SOCKETIO.on('login')
 def on_login(data):
     ''' When a client logs in, check if user is in database and send relevant info '''
-    print(data['user'])
-    print(data['email'])
     stats = database_check(data['user'], data['email'])
     stats_info = []
     stats_info.append(stats.username)
@@ -88,12 +87,12 @@ def on_login(data):
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
 
-    
 # Event that will update the two users' databases after a game has ended
-@SOCKETIO.on('game-end')
-def on_win():
+@SOCKETIO.on('finish')
+def on_finish():
+    ''' Will update record once game has finished '''
     print('The game has ended')
-    
+
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg
     SOCKETIO.run(
