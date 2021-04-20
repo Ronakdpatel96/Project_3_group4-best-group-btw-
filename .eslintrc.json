@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/no-array-index-key": "off",
+    "react-hooks/exhaustive-deps": "off"
+  }
+}
