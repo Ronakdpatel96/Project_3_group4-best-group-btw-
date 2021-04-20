@@ -24,7 +24,7 @@ Instead, we focused on making sure the page loaded properly, with a functioning 
 12. `npm install react-router-dom`
 
 ## Google auth (not necessary)
-1.https://developers.google.com/identity/gsi/web/guides/display-google-one-tap
+1. https://developers.google.com/identity/gsi/web/guides/display-google-one-tap
 2. https://console.cloud.google.com/
 3. create an account
 4. credentials
