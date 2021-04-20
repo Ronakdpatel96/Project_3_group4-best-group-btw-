@@ -22,3 +22,11 @@ Instead, we focused on making sure the page loaded properly, with a functioning 
 10. `npm install react-google-login`
 11. `npm install axios`
 12. `npm install react-router-dom`
+
+## Google auth (not necessary)
+1.https://developers.google.com/identity/gsi/web/guides/display-google-one-tap
+2. https://console.cloud.google.com/
+3. create an account
+4. credentials
+5. google auth
+6. register web app
