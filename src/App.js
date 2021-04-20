@@ -1,10 +1,9 @@
 import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
-//import logo from './logo.svg';
-import {Login} from './Login.js';
-import {Sample} from './board.js';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Login } from './Login';
+import { Sample } from './board';
 import './App.css';
-import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 
 const socket = io();
 
@@ -59,5 +58,3 @@ function App() {
 }
 
 export default App;
-
-// Just testing this out for the login page
