@@ -1,5 +1,8 @@
 import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Login } from './Login';
+import { Sample } from './board';
 import './App.css';
 import { Chat } from './Chat.js';
 
@@ -23,8 +26,13 @@ function App() {
   }, []);
 
   return (
+    <div>
+    <div>
+      <Login Login/>
+    </div>
+    
     <div className="database-info-holder">
-      <button type="button" onClick={showStats}> Show/Hide Stats </button>
+      <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
       { shown === true ? (
         <div className="database-info">
           Name:&nbsp;
@@ -42,9 +50,12 @@ function App() {
           <br />
           Rank:&nbsp;
           {stats[5]}
+          <br />
+          {stats[6]}
         </div>
       ) : null }
       <Chat />
+    </div>
     </div>
   );
 }

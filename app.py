@@ -1,3 +1,4 @@
+''' App that acts as a server for App.js'''
 import os
 from flask import Flask, send_from_directory, json
 from flask_socketio import SocketIO
@@ -16,7 +17,6 @@ APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 DB = SQLAlchemy(APP)
 
-# For testing purposes, remember to update this later
 class Person(DB.Model):
     ''' Defines what a person is '''
     __table_args__ = {'extend_existing': True}
@@ -29,20 +29,15 @@ class Person(DB.Model):
 
     def __repr__(self):
         return '<Person %r>' % self.username
-        
-DB.create_all()
 
-#new_user = Person(username="Bill", email="bill355@website.com", win=5, loss=2, tie=1, rank=52)
-#DB.session.add(new_user)
-#DB.session.commit()
-# End of testing code
+DB.create_all()
 
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
-                    
+
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
 def index(filename):
@@ -60,16 +55,28 @@ def on_connect():
 def on_disconnect():
     ''' When a client disconnects from this Socket connection, this function is run '''
     print('User disconnected!')
-    
-def database_check(user,email_address):
+
+def database_check(user, email_address):
+    ''' Checks if a user is already in the database'''
     check = Person.query.filter_by(username=user).first()
     if check is None:
         new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
         DB.session.add(new_user)
         DB.session.commit()
         return new_user
-    return user
+    return check
     
+def add_rank_statement(rank):
+    ''' Page tells the user how they are doing '''
+    if rank == 0:
+        return "Just starting out."
+    elif rank > 0 and rank < 10:
+        return "Got a few wins to your name"
+    elif rank > 10 and rank < 35:
+        return "Getting really good at the game now"
+    elif rank > 35:
+        return "You are a champion!"
+
 @SOCKETIO.on('login')
 def on_login(data):
     ''' When a client logs in, check if user is in database and send relevant info '''
@@ -81,6 +88,7 @@ def on_login(data):
     stats_info.append(stats.loss)
     stats_info.append(stats.tie)
     stats_info.append(stats.rank)
+    stats_info.append(add_rank_statement(stats.rank))
     print(stats)
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
@@ -89,11 +97,13 @@ def on_login(data):
 def on_chat(data):
     SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
     
+
 # Event that will update the two users' databases after a game has ended
-@SOCKETIO.on('game-end')
-def on_win():
+@SOCKETIO.on('finish')
+def on_finish():
+    ''' Will update record once game has finished '''
     print('The game has ended')
-    
+
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg
     SOCKETIO.run(
