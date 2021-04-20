@@ -39,7 +39,7 @@ class ChessGame extends Component {
     
     this.setState(({ history, pieceSquare }) => ({
       fen: this.game.fen(),
-      history: this.game.history({ verbose: true })
+      history: this.game.history({ verbose: false })
     }));
   };
 
@@ -47,14 +47,17 @@ class ChessGame extends Component {
 
   render() {
     const { fen }  = this.state;
-    const history = this.game.history();
+    
+    const his = this.state.history;
+    
+    console.log(his);
     
     return this.props.children({
       position: fen,
-      moves: history, 
       onMouseOverSquare: this.onMouseOverSquare,
       onMouseOutSquare: this.onMouseOutSquare,
-      onDrop: this.onDrop
+      onDrop: this.onDrop,
+      PGN: his
     });
   }
 }
@@ -116,12 +119,13 @@ export default function BlindChess() {
           onDrop,
           onMouseOverSquare,
           onMouseOutSquare,
-          dropSquareStyle
+          dropSquareStyle,
+          PGN
         }) => (
         <div>
           <Chessboard
             id="humanVsHuman"
-            width={320}
+            width={640}
             position={position}
             onDrop={onDrop}
             onMouseOverSquare={onMouseOverSquare}
@@ -157,9 +161,14 @@ export default function BlindChess() {
           
           <h3>
           { game_is_over(position) }
-          { history_of_moves(moves) } 
+          
           </h3>
-
+          
+          <ol>
+          { PGN.map((move) => <li>{move}</li>) } 
+          
+          </ol>
+          
           </div>
         )}
         </ChessGame>
