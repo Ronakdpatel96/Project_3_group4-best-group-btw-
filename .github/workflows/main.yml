@@ -40,5 +40,11 @@ jobs:
       - name: Install pylint
         run: pip install pylint
         
+      - name: Create pylintrc file
+        run: touch .pylintrc
+        
+      - name: Remove specific errors
+        run: printf "[MESSAGES CONTROL]\ndisable= E1101, R0903, W1508" > .pylintrc
+        
       - name: Lint files
         run: pylint app.py
