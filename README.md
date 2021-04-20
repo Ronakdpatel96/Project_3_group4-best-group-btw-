@@ -28,5 +28,5 @@ Instead, we focused on making sure the page loaded properly, with a functioning 
 2. https://console.cloud.google.com/
 3. create an account
 4. credentials
-5. google auth
+5. OAuth consent screen
 6. register web app
