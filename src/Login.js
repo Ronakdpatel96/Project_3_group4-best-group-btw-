@@ -6,14 +6,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import BlindChess from './chessboard.js';
 import Chat from './chat.js';
+import Stats from './Stats.js'
 
 //https://oauth2.googleapis.com/tokeninfo?id_token={token}
 const socket = io();
 
-export function user(props){
-    
-    return
-}
 export function Login() {
     const [Login, setLogin] = useState(false);
     const [page, setPage] = useState(false);
@@ -101,6 +98,11 @@ export function Login() {
                         <div className="chat">
                             <Chat className="chat"/>
                         </div>
+                        
+                        <div className="Stats">
+                            <Stats className="Stats"/>
+                        </div>
+                        
                     </div> )}
                 
                 </div>
