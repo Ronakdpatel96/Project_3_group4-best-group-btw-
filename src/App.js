@@ -46,11 +46,10 @@ function App() {
         <div className="sub-about">
         <div className="about-title">What's the Penalty?</div>
           <div className="information">
-          Penalty Chess is a unique take on the timeless classic game, but is not for the average player.
-          This game is designed to put you to the test, making sure that you are truly keeping up, not only with your opponent, but with yourself.
+          Every piece looks the same, which means you have to remember where you placed each piece. If you forget and accidentally make an illegal move, you lose immediately.
           </div>
           <div className="information">
-          All the pieces in front of you are all the same. There is absolutely no way to tell the difference from a pawn to a queen, a rook to a bishop, a knight to a king.
+          This is a tougher and more challenging version of chess, perfect for those who are comfortable with the game and want to take it to the next level.
           </div>
         </div>
       </div>
