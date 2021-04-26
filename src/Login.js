@@ -26,9 +26,9 @@ export function Login() {
         socket.emit('joined', { user: user , email: emailName});
         setLogin(false);
         }
-        
-    //console.log("User", user);
     
+    //console.log("User", user);
+
     
     const responseGoogle = (response) => {
         //console.log(response);
@@ -44,14 +44,14 @@ export function Login() {
                 console.log("userName",userName);
                 
                 setUser(setName => userName);
+                socket.emit('user', {user:user});
                 setEmail(setName => emailUser);
                 
                 setLogin(true);
                 setPage(true);
             });
     };
-    
-    
+
     return(
         <div class="login">
             <head>
@@ -92,14 +92,18 @@ export function Login() {
                 <div class='Page2'>
                 {page === false ? null : (
                     <div class="chessBoard">
-                        <div className="board">
+                    
+                        <div class="google" id={user}>
+                            <h1>Hello: {user}</h1>
+                        </div>
+                        <div className="board" id={user}>
                             <BlindChess/>
                         </div>
-                        <div className="chat">
+                        <div className="chat" id={user}>
                             <Chat className="chat"/>
                         </div>
                         
-                        <div className="Stats">
+                        <div className="Stats" id={user}>
                             <Stats className="Stats"/>
                         </div>
                         

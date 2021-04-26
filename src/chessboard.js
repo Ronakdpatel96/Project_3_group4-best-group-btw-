@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
 import {useState, useEffect} from 'react';
-import './Login.js';
+import {Login} from './Login.js';
 import io from 'socket.io-client';
 
 const socket = io();
@@ -115,33 +115,44 @@ function history_of_moves (moves) {
   return moves;
 }
 
-
 export default function BlindChess() {
   const [Player, setPlayer] = useState([]);
   const [Spectator, setSpectator] = useState([]);
+  const [user, setUser] = useState([]);
+
+
   
   useEffect(() => {
-            socket.on('Player added', (Login) => {
-            console.log('New Player was added to the game');
-            console.log(Login);
-            //setPlayers(Login);
+            socket.on('LoginName', (LoginName) => {
+              console.log('New Player was added to the game');
+              console.log("current Player",LoginName);
+              var userName = LoginName;
+              setUser( name => userName);
             });
-            
             socket.on('Players', (Players) => {
                 console.log(Players);
                 setPlayer(stats => Players);
+            });
+            
+            socket.on('current', (current) => {
+              
             });
             
             socket.on('Spectators', (Spectators) => {
                 console.log(Spectators);
                 setSpectator(stats => Spectators);
             });
-            
         }, []);
+        
+  const player1 = Player[0];
+  const player2 = Player[1];
+  
+  
   return (
     <div>
-    <h2>Players: {Player}</h2>
-    <h2>Spectators: {Spectator}</h2>
+
+    <h2> Players: { player1}, {player2}</h2>
+    <h2>Spectators: {Spectator } </h2>
     
     <ChessGame>
         {({

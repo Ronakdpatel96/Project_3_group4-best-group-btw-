@@ -117,7 +117,7 @@ def players(data):
     print(Spectators)
     #print(LoginName)
     
-    SOCKETIO.emit('LoggedIn', LoginName, broadcast=True, include_self=False)
+    SOCKETIO.emit('LoginName', data['user'], broadcast=False, include_self=False)
     SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
     SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
 
