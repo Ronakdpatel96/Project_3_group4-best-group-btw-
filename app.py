@@ -43,9 +43,15 @@ SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
+Spectators = []
+Players = []
+LoginName = []
+LoginEmail = []
+userName = []
                     
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
+
 def index(filename):
     ''' Gets the html file used for this function '''
     return send_from_directory('./build', filename)
@@ -74,8 +80,6 @@ def database_check(user,email_address):
 @SOCKETIO.on('login')
 def on_login(data):
     ''' When a client logs in, check if user is in database and send relevant info '''
-    print(data['user'])
-    print(data['email'])
     stats = database_check(data['user'], data['email'])
     stats_info = []
     stats_info.append(stats.username)
@@ -87,6 +91,36 @@ def on_login(data):
     print(stats)
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
+    
+@SOCKETIO.on('joined')
+def players(data):
+    global LoginName
+    global LoginEmail
+    global Players
+    global userName
+    global Spectators
+    
+    email = data['email']
+    user = email.split('@')[0]
+    
+    if user not in userName:
+        userName.append(user)
+        LoginEmail.append(str(data['email']))
+        LoginName.append(str(data['user']))
+        if len(Players) < 2:
+            Players.append(str(data['user']))
+        else:
+            Spectators.append((str(data['user'])))
+            
+            
+    print(Players)
+    print(Spectators)
+    #print(LoginName)
+    
+    SOCKETIO.emit('LoggedIn', LoginName, broadcast=True, include_self=False)
+    SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
+    SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
+
 
     
 # Event that will update the two users' databases after a game has ended
