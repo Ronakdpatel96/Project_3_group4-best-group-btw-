@@ -54,6 +54,12 @@ function App() {
         </div>
       </div>
     </div>
+    
+    <div className="footer">
+      <div className="contact">
+      © Created by Mike, Joe, Ronak, and Karel
+      </div>
+    </div>
     </body>
   );
 }
