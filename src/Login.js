@@ -9,12 +9,16 @@ import Chat from './chat.js';
 
 //https://oauth2.googleapis.com/tokeninfo?id_token={token}
 const socket = io();
+
+export function user(props){
+    
+    return
+}
 export function Login() {
     const [Login, setLogin] = useState(false);
     const [page, setPage] = useState(false);
     const [user, setUser] = useState([]);
     const [emailName, setEmail] = useState([]);
-    
     
     console.log("Is the user logged in? ", Login);
     if(Login == true){
@@ -25,23 +29,6 @@ export function Login() {
         socket.emit('joined', { user: user , email: emailName});
         setLogin(false);
         }
-    
-    useEffect(() => {
-            socket.on('Player added', (Login) => {
-            console.log('New Player was added to the game');
-            console.log(Login);
-            //setPlayers(Login);
-            });
-            
-            socket.on('Players', (Players) => {
-                console.log(Players);
-            });
-            
-            socket.on('Spectators', (Spectators) => {
-                console.log(Spectators);
-            });
-            
-        }, []);
         
     //console.log("User", user);
     

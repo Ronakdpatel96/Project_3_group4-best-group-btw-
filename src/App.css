@@ -58,8 +58,11 @@
 
 
 body{
-  background-image: url("chessImage.jpg");
-  background-size: cover; 
+  background: url("chessImage.jpg") no-repeat center center fixed;
+  position:absolute;
+  width:100%;
+  top:0;
+  left:0;
 }
 
 .Page2{
@@ -84,4 +87,8 @@ body{
 }
 .board{
   text-align:center;
+}
+
+h2{
+  color:white;
 }
