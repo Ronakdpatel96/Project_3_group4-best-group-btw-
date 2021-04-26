@@ -8,9 +8,8 @@ import BlindChess from './chessboard.js';
 import Chat from './chat.js';
 
 // https://oauth2.googleapis.com/tokeninfo?id_token={token}
-const socket = io();
 
-export function Login() {
+export function Login({ socket }) {
     const [Login, setLogin] = useState(false);
     const [page, setPage] = useState(false);
     const [user, setUser] = useState([]);
@@ -58,12 +57,12 @@ export function Login() {
         //Need to change the webpage to the next page once logged in
         };
     
-    
+    const user_data = { Black: "Mike", White: "Joe", Spectator : ["idk", "sdqw"] };
     return(
         <div class="login">
             <head>
                 <title>Penalty chess login page</title>
-                <meta name="google-signin-client_id" content="343458998580-grsva1siatfujrucu7b75hug4hocopsg.apps.googleusercontent.com"/>
+                <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
                 <script src="https://apis.google.com/js/platform.js" async defer></script>
             </head>
             <body>
@@ -100,7 +99,10 @@ export function Login() {
                 {page === false ? null : (
                     <div class="chessBoard">
                         <div className="board">
-                            <BlindChess/>
+                            <BlindChess
+                                user_data = {user_data}
+                                socket = { socket } 
+                            />
                         </div>
                         <div className="chat">
                             <Chat className="chat"/>

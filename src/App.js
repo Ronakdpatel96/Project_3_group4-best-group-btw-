@@ -4,8 +4,11 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Login } from './Login';
 import { Sample } from './board';
 import './App.css';
+import BlindChess from "./chessboard.js";
+
 
 const socket = io();
+const user_data = { Black: "Mike", White: "Joe", Spectator : ["idk", "sdqw"] };
 
 function App() {
   const [shown, setShown] = useState(false);
@@ -25,34 +28,8 @@ function App() {
 
   return (
     <div>
-    <div>
-      <Login Login/>
-    </div>
-    
-    <div className="database-info-holder">
-      <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
-      { shown === true ? (
-        <div className="database-info">
-          Name:&nbsp;
-          {stats[0]}
-          <br />
-          Email:&nbsp;
-          {stats[1]}
-          <br />
-          Record:&nbsp;
-          {stats[2]}
-          -
-          {stats[3]}
-          -
-          {stats[4]}
-          <br />
-          Rank:&nbsp;
-          {stats[5]}
-          <br />
-          {stats[6]}
-        </div>
-      ) : null }
-    </div>
+     <BlindChess 
+     user_data = {user_data} />
     </div>
   );
 }
