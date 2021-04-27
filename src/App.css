@@ -73,6 +73,11 @@ body{
   color:white;
 }
 
+.board {
+  margin: auto;
+  width: 40em
+}
+
 .database-info-holder{
   text-align:center;
 }
