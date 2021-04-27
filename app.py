@@ -48,6 +48,7 @@ Players = []
 LoginName = []
 LoginEmail = []
 userName = []
+PlayerE = []
                     
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
@@ -94,9 +95,10 @@ def on_login(data):
     
 @SOCKETIO.on('joined')
 def players(data):
-    global LoginName
-    global LoginEmail
+    #global LoginName
+    #global LoginEmail
     global Players
+    global PlayerE
     global userName
     global Spectators
     
@@ -105,10 +107,12 @@ def players(data):
     
     if user not in userName:
         userName.append(user)
-        LoginEmail.append(str(data['email']))
-        LoginName.append(str(data['user']))
+        #LoginEmail.append(str(data['email']))
+        #LoginName.append(str(data['user']))
         if len(Players) < 2:
             Players.append(str(data['user']))
+            PlayerE.append(str(data['email']))
+            
         else:
             Spectators.append((str(data['user'])))
             
@@ -117,7 +121,7 @@ def players(data):
     print(Spectators)
     #print(LoginName)
     
-    SOCKETIO.emit('LoginName', data['user'], broadcast=False, include_self=False)
+    SOCKETIO.emit('Emails', PlayerE, broadcast=True, include_self=True)
     SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
     SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
 

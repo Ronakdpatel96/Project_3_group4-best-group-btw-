@@ -53,6 +53,7 @@ export function Login() {
     };
     
     const [Player, setPlayer] = useState([]);
+    const [PlayerE, setPlayerE] = useState([]);
     const [Spectator, setSpectator] = useState([]);
     const [user1, setUser1] = useState([]);
 
@@ -70,31 +71,37 @@ export function Login() {
                 setPlayer(stats => Players);
             });
             
-            socket.on('current', (current) => {
-              
+            socket.on('Emails', (Emails) => {
+                console.log(Emails);
+                setPlayerE(stats => Emails);
             });
             
             socket.on('Spectators', (Spectators) => {
                 console.log(Spectators);
                 setSpectator(stats => Spectators);
             });
+            
         }, []);
         
         
     const player1 = Player[0];
     const player2 = Player[1];
+    
+    const player1E = PlayerE[0];
+    const player2E = PlayerE[1];
 
     
     const user_data = { 'Black': player1, 'White': player2, Spectator : Spectator };
     
     console.log(user_data);
+    console.log(player1E,player2E);
     
     console.log("Two Players: ",player1,player2); 
     var color;
-    if(user == player1){
+    if(user == player1 && emailName == player1E ){
         color = 'White';
     }
-    else if(user == player2){
+    else if(user == player2 && emailName == player2E){
         color = 'Black';
     }
     else{
@@ -147,7 +154,7 @@ export function Login() {
                             <h2>Players: {player1}, {player2}</h2>
                             <h2> Spectators: {Spectator} </h2>
                         </div>
-                        <div className="board">
+                        <div className="board" id={user}>
                             <BlindChess
                              socket={socket}
                              user_data={user_data}
