@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Login } from './Login';
 import { Sample } from './board';
+//import logo from './logo.svg';
 import './App.css';
 import { Chat } from './Chat.js';
 
 const socket = io();
 
 function App() {
-
+  
   const [shown, setShown] = useState(false);
   const [stats, setStats] = useState([]);
 
@@ -25,11 +26,9 @@ function App() {
     });
   }, []);
 
+
   return (
     <div>
-    <div>
-      <Login Login/>
-    </div>
     
     <div className="database-info-holder">
       <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
@@ -55,6 +54,9 @@ function App() {
         </div>
       ) : null }
     </div>
+      <div>
+        <Login Login/>
+      </div>
     </div>
   );
 }

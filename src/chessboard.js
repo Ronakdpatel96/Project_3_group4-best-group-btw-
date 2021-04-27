@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
+import {useState, useEffect} from 'react';
+import './Login.js';
+import io from 'socket.io-client';
+
+const socket = io();
 
 class ChessGame extends Component {
+  
   static propTypes = { children: PropTypes.func };
 
   state = {
@@ -109,9 +115,34 @@ function history_of_moves (moves) {
   return moves;
 }
 
+
 export default function BlindChess() {
+  const [Player, setPlayer] = useState([]);
+  const [Spectator, setSpectator] = useState([]);
+  
+  useEffect(() => {
+            socket.on('Player added', (Login) => {
+            console.log('New Player was added to the game');
+            console.log(Login);
+            //setPlayers(Login);
+            });
+            
+            socket.on('Players', (Players) => {
+                console.log(Players);
+                setPlayer(stats => Players);
+            });
+            
+            socket.on('Spectators', (Spectators) => {
+                console.log(Spectators);
+                setSpectator(stats => Spectators);
+            });
+            
+        }, []);
   return (
     <div>
+    <h2>Players: {Player}</h2>
+    <h2>Spectators: {Spectator}</h2>
+    
     <ChessGame>
         {({
           position,
