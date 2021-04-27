@@ -7,6 +7,11 @@
   color: white;
 }
 
+.ChessBoard {
+  margin: auto;
+  width: 30em
+}
+
 div {
   color: white;
 }

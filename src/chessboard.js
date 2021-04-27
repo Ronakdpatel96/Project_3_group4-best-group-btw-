@@ -170,7 +170,7 @@ export default function BlindChess({user_data, socket, user_name}) {
     socket.emit('move', data);
   }
   
-  return (<div>
+  return (<div className="ChessBoard">
     <Chessboard
       id="chessBoard"
       width={640}
