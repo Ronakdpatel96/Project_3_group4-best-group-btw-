@@ -128,6 +128,11 @@ def players(data):
 def on_win():
     print('The game has ended')
     
+@SOCKETIO.on('move')
+def on_move(data):
+    print(data)
+    SOCKETIO.emit('move', data, broadcast=True, include_self=True)
+    
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg
     SOCKETIO.run(

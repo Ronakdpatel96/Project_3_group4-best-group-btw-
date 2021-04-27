@@ -51,6 +51,45 @@ export function Login() {
                 setPage(true);
             });
     };
+    
+    const [Player, setPlayer] = useState([]);
+    const [Spectator, setSpectator] = useState([]);
+    const [user1, setUser1] = useState([]);
+
+
+  
+    useEffect(() => {
+            socket.on('LoginName', (LoginName) => {
+              console.log('New Player was added to the game');
+              console.log("current Player",LoginName);
+              var userName = LoginName;
+              setUser1( name => userName);
+            });
+            socket.on('Players', (Players) => {
+                console.log("Players",Players);
+                setPlayer(stats => Players);
+            });
+            
+            socket.on('current', (current) => {
+              
+            });
+            
+            socket.on('Spectators', (Spectators) => {
+                console.log(Spectators);
+                setSpectator(stats => Spectators);
+            });
+        }, []);
+        
+        
+    const player1 = Player[0];
+    const player2 = Player[1];
+
+    
+    const user_data = { 'Black': player1, 'White': player2, Spectator : Spectator };
+    
+    console.log(user_data);
+    
+    console.log("Two Players: ",player1,player2); 
 
     return(
         <div class="login">
@@ -92,18 +131,24 @@ export function Login() {
                 <div class='Page2'>
                 {page === false ? null : (
                     <div class="chessBoard">
-                    
-                        <div class="google" id={user}>
+            
+                        <div class="google" >
                             <h1>Hello: {user}</h1>
+                            <h2>Players: {player1}, {player2}</h2>
+                            <h2> Spectators: {Spectator} </h2>
                         </div>
-                        <div className="board" id={user}>
-                            <BlindChess/>
+                        <div className="board">
+                            <BlindChess
+                             socket={socket}
+                             user_data={user_data}
+                             user_name={user}
+                             />
                         </div>
-                        <div className="chat" id={user}>
+                        <div className="chat" >
                             <Chat className="chat"/>
                         </div>
                         
-                        <div className="Stats" id={user}>
+                        <div className="Stats">
                             <Stats className="Stats"/>
                         </div>
                         

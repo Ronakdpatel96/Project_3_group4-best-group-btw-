@@ -73,11 +73,6 @@ body{
   color:white;
 }
 
-.chessboard{
-  justify-content: center;
-  align-items: center;
-}
-
 .database-info-holder{
   text-align:center;
 }
