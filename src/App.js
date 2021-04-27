@@ -29,7 +29,9 @@ function App() {
   return (
     <div>
      <BlindChess 
-     user_data = {user_data} />
+     socket={socket}
+     user_data = {user_data} 
+     user_name = {"White"}/>
     </div>
   );
 }
