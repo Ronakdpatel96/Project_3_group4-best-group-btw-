@@ -7,37 +7,8 @@ export default function BlindChess({user_data, socket, user_name}) {
   const [username, setUsername] = useState("");
   const [gameFen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const [history, setHistory] = useState([]);
-  const [Player, setPlayer] = useState([]);
-    const [Spectator, setSpectator] = useState([]);
-    const [user1, setUser1] = useState([]);
 
 
-  
-    useEffect(() => {
-            socket.on('LoginName', (LoginName) => {
-              console.log('New Player was added to the game');
-              console.log("current Player",LoginName);
-              var userName = LoginName;
-              setUser1( name => userName);
-            });
-            socket.on('Players', (Players) => {
-                console.log("Players",Players);
-                setPlayer(stats => Players);
-            });
-            
-            socket.on('current', (current) => {
-              
-            });
-            
-            socket.on('Spectators', (Spectators) => {
-                console.log(Spectators);
-                setSpectator(stats => Spectators);
-            });
-        }, []);
-        
-        
-    const player1 = Player[0];
-    const player2 = Player[1];
   /*function onClickButton() {
     if (inputRef != null && inputRef.current.value != "") {
       const userName = inputRef.current.value;
@@ -146,14 +117,14 @@ export default function BlindChess({user_data, socket, user_name}) {
     //console.log("list_moves", list_moves);
     console.log(game.in_checkmate());
     let GameInfo = "";
-    const turn = game.fen() === "start" || game.fen().search(/w/) !== -1 ? player1: player2;
+    const turn = game.fen() === "start" || game.fen().search(/w/) !== -1 ? "White": "Black";
     
     if (game.in_checkmate()) {
-      if (turn == user_name) {
-        GameInfo= player1+" won by checkmate";
+      if (turn == "Black") {
+        GameInfo="White won by checkmate";
       }
       else {
-        GameInfo=player2+ " won by checkmate";
+        GameInfo="Black won by checkmate";
       }
     }
     else if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
@@ -178,12 +149,13 @@ export default function BlindChess({user_data, socket, user_name}) {
       return;
     }
     
-    if (user_name == player1) {
+    
+    if (user_name == "White") {
       setFen("rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3");
       const data = { FEN: "rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3" , history: []};
       socket.emit('move', data);
     }
-    else if (user_name == player2) {
+    else if (user_name == "Black") {
       setFen("rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3");
       const data = { FEN: "rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3" , history: []};
      socket.emit('move', data);

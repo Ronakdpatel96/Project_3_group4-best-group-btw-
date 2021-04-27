@@ -90,6 +90,16 @@ export function Login() {
     console.log(user_data);
     
     console.log("Two Players: ",player1,player2); 
+    var color;
+    if(user == player1){
+        color = 'White';
+    }
+    else if(user == player2){
+        color = 'Black';
+    }
+    else{
+        color = 'Not playing';
+    }
 
     return(
         <div class="login">
@@ -141,7 +151,7 @@ export function Login() {
                             <BlindChess
                              socket={socket}
                              user_data={user_data}
-                             user_name={user}
+                             user_name={color}
                              />
                         </div>
                         <div className="chat" >
