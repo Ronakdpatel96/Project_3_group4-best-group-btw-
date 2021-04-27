@@ -1,10 +1,11 @@
 import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Login } from './Login';
 import { Sample } from './board';
 import './App.css';
 import BlindChess from "./chessboard.js";
+import Header from './components/Header.js';
 
 
 const socket = io();
@@ -27,12 +28,22 @@ function App() {
   }, []);
 
   return (
-    <div>
-     <BlindChess 
-     socket={socket}
-     user_data = {user_data} 
-     user_name = {"White"}/>
-    </div>
+    <BrowserRouter>
+    
+      <Header />
+      <div className="App">
+       <BlindChess 
+       socket={socket}
+       user_data = {user_data} 
+       user_name = {"White"}/>
+      </div>
+      
+      <Switch>
+        <Route path='/' component={Login} exact/>
+        <Route path='/chessgame' component={BlindChess}/>
+        <Route path='/leaderboard' component={Sample}/>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

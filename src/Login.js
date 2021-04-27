@@ -2,7 +2,7 @@ import './App.css';
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Sample } from './board';
 import BlindChess from './chessboard.js';
 import Chat from './chat.js';
