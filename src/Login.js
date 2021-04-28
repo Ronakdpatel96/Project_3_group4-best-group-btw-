@@ -16,8 +16,12 @@ export function Login() {
     const [page, setPage] = useState(false);
     const [user, setUser] = useState([]);
     const [emailName, setEmail] = useState([]);
+    const [shown, setShown] = useState(false);
+    const [stats, setStats] = useState([]);
     
+
     console.log("Is the user logged in? ", Login);
+
     if(Login == true){
         console.log(user);
         console.log(emailName);         //User and email would be used to update the database.
@@ -26,9 +30,9 @@ export function Login() {
         socket.emit('joined', { user: user , email: emailName});
         setLogin(false);
         }
-        
-    //console.log("User", user);
     
+    //console.log("User", user);
+
     
     const responseGoogle = (response) => {
         //console.log(response);
@@ -44,6 +48,7 @@ export function Login() {
                 console.log("userName",userName);
                 
                 setUser(setName => userName);
+                socket.emit('user', {user:user});
                 setEmail(setName => emailUser);
                 
                 setLogin(true);
@@ -51,7 +56,62 @@ export function Login() {
             });
     };
     
+    const [Player, setPlayer] = useState([]);
+    const [PlayerE, setPlayerE] = useState([]);
+    const [Spectator, setSpectator] = useState([]);
+    const [user1, setUser1] = useState([]);
+
+
+  
+    useEffect(() => {
+            socket.on('LoginName', (LoginName) => {
+              console.log('New Player was added to the game');
+              console.log("current Player",LoginName);
+              var userName = LoginName;
+              setUser1( name => userName);
+            });
+            socket.on('Players', (Players) => {
+                console.log("Players",Players);
+                setPlayer(stats => Players);
+            });
+            
+            socket.on('Emails', (Emails) => {
+                console.log(Emails);
+                setPlayerE(stats => Emails);
+            });
+            
+            socket.on('Spectators', (Spectators) => {
+                console.log(Spectators);
+                setSpectator(stats => Spectators);
+            });
+            
+        }, []);
+        
+        
+    const player1 = Player[0];
+    const player2 = Player[1];
     
+    const player1E = PlayerE[0];
+    const player2E = PlayerE[1];
+
+    
+    const user_data = { 'Black': player1, 'White': player2, 'Spectator' : Spectator };
+    
+    console.log(user_data);
+    console.log(player1E,player2E);
+    
+    console.log("Two Players: ",player1,player2); 
+    var color;
+    if(user == player1 && emailName == player1E ){
+        color = 'White';
+    }
+    else if(user == player2 && emailName == player2E){
+        color = 'Black';
+    }
+    else{
+        color = 'Spectator';
+    }
+
     return(
         <div class="login">
             <head>
@@ -59,7 +119,7 @@ export function Login() {
                 <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
                 <script src="https://apis.google.com/js/platform.js" async defer></script>
             </head>
-            <body>
+            <div class="header">
                 <div class="loggedIn">
                     <h4>{user}</h4>
                     <h4>{emailName}</h4>
@@ -67,46 +127,61 @@ export function Login() {
                 
                 {page == true ? null : (
                 <div class='Page1'>
-                <h1 class="title">Penalty Chess</h1>
-                
-                <br/>
-                <br/>
-                <br/>
-            
-                <div>
-                    <div class="google">
-                
-                    <h3>Login to play:</h3>
-                    
+                    <h1 class="title" id="top">Penalty Chess</h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div class="google">
+                            <h2>Login to play:</h2>
                             <br/>
                             <GoogleLogin
                             buttonText="Login with Google"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
-                        />
+                            />
                         </div>
+                        <br/>
+                        <br/>
+                        <br/>
                     </div>
-                </div> )}
+                    <br/>
+                    <br/>
+                    <br/>
+                </div> 
+                
+                )}
                 
                 <div class='Page2'>
                 {page === false ? null : (
                     <div class="chessBoard">
-                        <div className="board">
-                            <BlindChess/>
+            
+                        <div class="google" >
+                            <h1>Hello: {user}</h1>
+                            <h2>Players: {player1}, {player2}</h2>
+                            <h2> Spectators: {Spectator} </h2>
                         </div>
-                        <div className="chat">
+                        <div className="board" id={user}>
+                            <BlindChess
+                             socket={socket}
+                             user_data={user_data}
+                             user_name={color}
+                             />
+                        </div>
+                        <div className="chat" >
                             <Chat className="chat"/>
                         </div>
+
                         
                         <div className="Stats">
                             <Stats className="Stats"/>
                         </div>
-                        
+
                     </div> )}
                 
                 </div>
-            </body>
+            </div>
         </div> 
 );
 }

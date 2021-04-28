@@ -37,12 +37,13 @@ SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
-                    
+
 Spectators = []
 Players = []
 LoginName = []
 LoginEmail = []
 userName = []
+PlayerE = []
                     
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
@@ -102,9 +103,10 @@ def on_login(data):
     
 @SOCKETIO.on('joined')
 def players(data):
-    global LoginName
-    global LoginEmail
+    #global LoginName
+    #global LoginEmail
     global Players
+    global PlayerE
     global userName
     global Spectators
     
@@ -113,10 +115,12 @@ def players(data):
     
     if user not in userName:
         userName.append(user)
-        LoginEmail.append(str(data['email']))
-        LoginName.append(str(data['user']))
+        #LoginEmail.append(str(data['email']))
+        #LoginName.append(str(data['user']))
         if len(Players) < 2:
             Players.append(str(data['user']))
+            PlayerE.append(str(data['email']))
+            
         else:
             Spectators.append((str(data['user'])))
             
@@ -125,7 +129,7 @@ def players(data):
     print(Spectators)
     #print(LoginName)
     
-    SOCKETIO.emit('LoggedIn', LoginName, broadcast=True, include_self=False)
+    SOCKETIO.emit('Emails', PlayerE, broadcast=True, include_self=True)
     SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
     SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
 
@@ -140,6 +144,12 @@ def on_chat(data):
 def on_finish():
     ''' Will update record once game has finished '''
     print('The game has ended')
+    
+@SOCKETIO.on('move')
+def on_move(data):
+    print(data)
+    SOCKETIO.emit('move', data, broadcast=True, include_self=True)
+    
 
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg

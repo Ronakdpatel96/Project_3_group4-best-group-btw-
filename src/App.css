@@ -37,24 +37,151 @@
   }
 }
 
+
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
 .title {
   text-align: center;
-  color: white;
+  color: rgb(237, 255, 253);
+  text-shadow: 2px 2px #707070;
   font-weight: Bold;
   font-size: 100px;
   font-family: Helvetica, sans-serif;
 }
 
-.google {
-  text-align: center;
-  color: white;
+.google{
+  text-align:center;
+  color:white;
 }
+
+.text-holder {
+  background: rgb(237, 255, 253);
+  width: auto;
+  height: auto;
+  padding: 20px;
+  border: 10px #04a7d4;
+  margin: 0px;
+}
+
+h1 {
+  margin-top: 0px;
+}
+
+h2 {
+  color: rgb(237, 255, 253);
+  margin: 10px;
+  text-shadow: 1.5px 1.5px #545454;
+  font-family: Helvetica, sans-serif;
+}
+
+.information {
+  padding: 15px;
+  padding-left: 0px;
+  margin: 15px;
+  margin-left: 0px;
+  font-size: x-large;
+  color: #454545;
+}
+
+.about-title{
+  font-weight: bold;
+  font-size: xxx-large;
+  text-shadow: 2px 2px #a1a1a1;
+  font-family: Helvetica, sans-serif;
+}
+
+.about {
+  display: flex;
+  padding-bottom: 20px;
+}
+
+.about-penalty {
+  display: flex;
+  padding-top: 20px;
+}
+
+.purpose {
+  text-align: center;
+}
+
+.sub-about {
+  padding: 30px;
+}
+
+img {
+  animation: fadeIn 1s;
+  border-radius: 15px;
+  margin: 10px;
+  height: 350px;
+  transition-timing-function: ease;
+  transition: width 2s, height 2s, transform 2s;
+}
+
+.img-right:hover {
+  width: 400px;
+  height: 400px;
+  transform: rotate(-5deg);
+}
+
+.img-left:hover {
+  width: 400px;
+  height: 400px;
+  transform: rotate(5deg);
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+.footer {
+  background: linear-gradient(to top, rgba(237, 255, 253,0) 0%,rgba(237, 255, 253,0) 75%,rgba(237, 255, 253,1) 100%), #1c1e1f;
+  height: 500px;
+}
+
+.contact {
+  color: #e3e3e3;
+  text-align: center;
+  padding-top: 20px;
+  
+}
+
+.column-holder {
+  padding-top: 200px;
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  border-left: 1px solid black;
+  color: #e3e3e3;
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: #e3e3e3;
+  padding: 5px;
+  
+}
+
 
 .loggedIn {
   text-align: right;
   color: white;
 }
 
+.login {
+  height: auto;
+  background: linear-gradient(to bottom, rgba(237, 255, 253,0) 0%,rgba(237, 255, 253,0) 75%,rgba(237, 255, 253,1) 100%);
+}
 
 body{
   background: url("chessImage.jpg") no-repeat center center fixed;
@@ -64,17 +191,17 @@ body{
   left:0;
 }
 
-.Page2 {
-  color: white;
+.Page2{
+  color:white;
 }
 
 .database-info{
   color:white;
 }
 
-.chessboard{
-  justify-content: center;
-  align-items: center;
+.board {
+  margin: auto;
+  width: 40em
 }
 
 .database-info-holder{
@@ -86,8 +213,4 @@ body{
 }
 .board{
   text-align:center;
-}
-
-h2{
-  color:white;
 }
