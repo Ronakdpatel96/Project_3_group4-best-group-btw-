@@ -11,7 +11,6 @@ import Landing from './Landing.js';
 
 
 const socket = io();
-const user_data = { Black: "Mike", White: "Joe", Spectator : ["idk", "sdqw"] };
 
 function App() {
   const [shown, setShown] = useState(false);
@@ -48,8 +47,16 @@ function App() {
         </Route> 
         <Route path='/gameroom' exact>
           <Gameroom socket={socket} user_name={test_username}/>
-              Enter User Name here: <input ref={inputRef} type="text" />
-    <button onClick={onClickButton}>Set Username</button>
+          {
+          test_username =="" ? 
+          
+          <>
+          <input ref={inputRef} type="text" />
+          <button onClick={onClickButton}>Set Username</button> 
+          </>
+          :
+          null
+          }
         </Route>
         <Route path='/leaderboard' exact>
           <Leaderboard />

@@ -55,18 +55,19 @@ export default function BlindChess({user_data, socket, user_name}) {
     if (sourceSquare === targetSquare) {
       return;
     }
+    //console.log("User_data " , user_data);
     
-    
-    const spectator = user_data.Spectator;
-    
-    if (spectator.includes(user_name)) {
+    if (user_data.Black !== user_name && user_data.White !== user_name) {
       return;
     }
     
-    console.log(sourceSquare, targetSquare);
+    //console.log(sourceSquare, targetSquare);
     const game = new Chess(gameFen);
     // see if the move is legal
     
+    if (game.in_checkmate()) {
+      return;
+    }
     
     const turn = game.fen() === "start" || game.fen().search(/w/) !== -1 ? "White": "Black";
     
@@ -172,7 +173,7 @@ export default function BlindChess({user_data, socket, user_name}) {
     
     return (<div className="chessInfo">
       <h1> {GameInfo} </h1>
-      <h1> You are playing as {Role}</h1>
+      <h1> {user_name} (You) are playing as {Role}</h1>
       <ol> {list_moves.map((move) => <li>{move}</li>)} </ol>
       
       </div>
@@ -201,11 +202,18 @@ export default function BlindChess({user_data, socket, user_name}) {
   }
   
   function replay() {
+    
+    if (!(user_data.Black == user_name || user_data.White == user_name)) {
+      return;
+    }
     setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     setHistory([]); 
     const data = { FEN: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" , history: []};
     socket.emit('move', data);
   }
+  
+
+  
   
   return (<div className="ChessBoard">
     <Chessboard
@@ -235,8 +243,8 @@ export default function BlindChess({user_data, socket, user_name}) {
     />
     
     {chessInfo()}
-    <button onClick={() => resign()}>Resign </button>
-    {Chess(gameFen).in_checkmate() ? <button onClick={() => replay()}>Play Again</button> : ""}
+    {user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => resign()}>Resign </button> : null}
+    {Chess(gameFen).in_checkmate() && user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => replay()}>Play Again</button> : ""}
     
     <br/>
 

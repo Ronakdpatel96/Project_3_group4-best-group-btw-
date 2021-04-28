@@ -22,7 +22,7 @@ function Header ({isLoggedIn}){
             </li>
             {
                 !isLoggedIn ? 
-                <Link to="/login">Log In</Link>
+                <li><Link to="/login">Log In</Link></li>
                 :
                 null
             }

@@ -11,7 +11,7 @@ export function Gameroom({socket, user_name}) {
     useEffect( () => {
         socket.on('on_join', (data) => {
             console.log("on_join ", data);
-           setUserData(data);
+            setUserData(data);
         });
     }
     , [] );
