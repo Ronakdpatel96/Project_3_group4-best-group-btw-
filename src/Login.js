@@ -16,8 +16,12 @@ export function Login() {
     const [page, setPage] = useState(false);
     const [user, setUser] = useState([]);
     const [emailName, setEmail] = useState([]);
+    const [shown, setShown] = useState(false);
+    const [stats, setStats] = useState([]);
     
+
     console.log("Is the user logged in? ", Login);
+
     if(Login == true){
         console.log(user);
         console.log(emailName);         //User and email would be used to update the database.
@@ -115,7 +119,7 @@ export function Login() {
                 <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
                 <script src="https://apis.google.com/js/platform.js" async defer></script>
             </head>
-            <body>
+            <div class="header">
                 <div class="loggedIn">
                     <h4>{user}</h4>
                     <h4>{emailName}</h4>
@@ -123,27 +127,31 @@ export function Login() {
                 
                 {page == true ? null : (
                 <div class='Page1'>
-                <h1 class="title">Penalty Chess</h1>
-                
-                <br/>
-                <br/>
-                <br/>
-            
-                <div>
-                    <div class="google">
-                
-                    <h3>Login to play:</h3>
-                    
+                    <h1 class="title" id="top">Penalty Chess</h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div class="google">
+                            <h2>Login to play:</h2>
                             <br/>
                             <GoogleLogin
                             buttonText="Login with Google"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
-                        />
+                            />
                         </div>
+                        <br/>
+                        <br/>
+                        <br/>
                     </div>
-                </div> )}
+                    <br/>
+                    <br/>
+                    <br/>
+                </div> 
+                
+                )}
                 
                 <div class='Page2'>
                 {page === false ? null : (
@@ -164,15 +172,16 @@ export function Login() {
                         <div className="chat" >
                             <Chat className="chat"/>
                         </div>
+
                         
                         <div className="Stats">
                             <Stats className="Stats"/>
                         </div>
-                        
+
                     </div> )}
                 
                 </div>
-            </body>
+            </div>
         </div> 
 );
 }
