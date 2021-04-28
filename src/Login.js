@@ -79,7 +79,7 @@ export function Login() {
                 
                 {page == true ? null : (
                 <div class='Page1'>
-                    <h1 class="title">Penalty Chess</h1>
+                    <h1 class="title" id="top">Penalty Chess</h1>
                     <br/>
                     <br/>
                     <br/>
