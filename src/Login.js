@@ -91,7 +91,7 @@ export function Login() {
     const player2E = PlayerE[1];
 
     
-    const user_data = { 'Black': player1, 'White': player2, Spectator : Spectator };
+    const user_data = { 'Black': player1, 'White': player2, 'Spectator' : Spectator };
     
     console.log(user_data);
     console.log(player1E,player2E);
@@ -105,7 +105,7 @@ export function Login() {
         color = 'Black';
     }
     else{
-        color = 'Not playing';
+        color = 'Spectator';
     }
 
     return(
