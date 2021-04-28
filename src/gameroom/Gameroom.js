@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import BlindChess from './chessboard.js';
 /* eslint-disable */
 export function Gameroom({socket, user_name}) {
@@ -9,23 +8,32 @@ export function Gameroom({socket, user_name}) {
     const [ user_data, setUserData ] = useState([]);
     
     useEffect( () => {
-        socket.on('on_join', (data) => {
-            console.log("on_join ", data);
+        socket.on("on_join", (data) => {
+            console.log("on_join mount ", data);
             setUserData(data);
         });
     }
     , [] );
     
+    useEffect ( () => {
+        socket.on("on_join", (data) => {
+            console.log("on_join mount ", data);
+            setUserData(data);
+        });
+    }, [user_data]);
+    
+    
     function onClickJoin () {
         setJoin((prev) => !prev);
-        console.log(user_name);   
-        if (! user_data.includes(user_name)) {
+        console.log("on click join " , user_name);   
+        
+        
+        if (!user_data.includes(user_name)) {
             user_data.push(user_name);
         }
         
         const new_user_data = user_data;
         setUserData(new_user_data);
-
         socket.emit('on_join', new_user_data);
     }
     
@@ -49,8 +57,5 @@ export function Gameroom({socket, user_name}) {
       {gameStart()}  
     </div>
     );
-    
 }
-
-
 export default Gameroom;

@@ -7,14 +7,10 @@ import Chat from '../chat.js';
 
 // https://oauth2.googleapis.com/tokeninfo?id_token={token}
 
-export function Login({ socket }) {
+export function Login({ socket, user, setUser, emailName, setEmail }) {
     const [Login, setLogin] = useState(false);
     const [page, setPage] = useState(false);
-    const [user, setUser] = useState([]);
-    const [emailName, setEmail] = useState([]);
-    
-    
-    
+
     console.log("Is the user logged in? ",Login);
     if(Login == true){
         console.log(user);
@@ -55,7 +51,6 @@ export function Login({ socket }) {
         //Need to change the webpage to the next page once logged in
         };
     
-    const user_data = { Black: "Mike", White: "Joe", Spectator : ["idk", "sdqw"] };
     return(
         <div class="login">
             <head>
