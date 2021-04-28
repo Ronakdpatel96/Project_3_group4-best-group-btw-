@@ -136,6 +136,7 @@ def players(data):
 
 @SOCKETIO.on('chat')
 def on_chat(data):
+    print(data)
     SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
     
 

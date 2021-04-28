@@ -6,7 +6,7 @@ import { Sample } from './board';
 //import logo from './logo.svg';
 //import logo from './logo.svg';
 import './App.css';
-import { Chat } from './Chat.js';
+import { Chat } from './chat.js';
 
 const socket = io();
 
@@ -31,8 +31,6 @@ function App() {
   return (
     <body>
     <Login Login/>
-    
-<<<<<<< HEAD
     <div className="database-info-holder">
       <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
       { shown === true ? (
@@ -60,7 +58,6 @@ function App() {
       <div>
         <Login Login/>
       </div>
-=======
     <div className="text-holder">
     
       <div className="about">
@@ -135,7 +132,6 @@ function App() {
       <div className="contact">
       © Created by Mike Jeong, Joe Passalacqua, Ronak Patel, and Karel Rojas Requena
       </div>
->>>>>>> 1c32dd39ea16ec4773511172019facb7cb8c444e
     </div>
     </body>
   );

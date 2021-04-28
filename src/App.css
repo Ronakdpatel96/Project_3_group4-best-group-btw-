@@ -37,6 +37,9 @@
   }
 }
 
+ul {
+  list-style:none;
+}
 
 html, body {
   height: 100%;
@@ -208,9 +211,17 @@ body{
   text-align:center;
 }
 
-.chat{
-  text-align:right;
+.chatting{
+  text-align:left;
+  height:250px;
+  width:300px;
+  border:1px solid #ccc;
+  font:16px/26px Georgia, Garamond, Serif;
+  background-color:black;
+  overflow:auto;
 }
+
+
 .board{
   text-align:center;
 }
