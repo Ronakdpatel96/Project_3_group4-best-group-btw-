@@ -37,25 +37,25 @@
   }
 }
 
-.title {
+
+.title{
   text-align: center;
   color: white;
-  font-weight: Bold;
+  font-weight:Bold;
   font-size: 100px;
   font-family: Helvetica, sans-serif;
 }
 
-.google {
-  text-align: center;
-  color: white;
+.google{
+  text-align:center;
+  color:white;
 }
 
-.loggedIn {
-  text-align: right;
-  color: white;
+.loggedIn{
+  text-align:right;
+  color:white;
 }
 
-<<<<<<< HEAD
 
 body{
   background: url("chessImage.jpg") no-repeat center center fixed;
@@ -63,15 +63,10 @@ body{
   width:100%;
   top:0;
   left:0;
-=======
-body {
-  background-image: url("chessImage.jpg");
-  background-size: cover;
->>>>>>> 9ca263150403bf720b3a1011b13c7441503214de
 }
 
-.Page2 {
-  color: white;
+.Page2{
+  color:white;
 }
 
 .database-info{
@@ -93,10 +88,7 @@ body {
 .board{
   text-align:center;
 }
-<<<<<<< HEAD
 
 h2{
   color:white;
 }
-=======
->>>>>>> 9ca263150403bf720b3a1011b13c7441503214de

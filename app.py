@@ -37,7 +37,6 @@ SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
-<<<<<<< HEAD
 Spectators = []
 Players = []
 LoginName = []
@@ -45,9 +44,6 @@ LoginEmail = []
 userName = []
 PlayerE = []
                     
-=======
-
->>>>>>> 9ca263150403bf720b3a1011b13c7441503214de
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
 
@@ -142,16 +138,13 @@ def players(data):
 def on_finish():
     ''' Will update record once game has finished '''
     print('The game has ended')
-<<<<<<< HEAD
     
 @SOCKETIO.on('move')
 def on_move(data):
     print(data)
     SOCKETIO.emit('move', data, broadcast=True, include_self=True)
     
-=======
 
->>>>>>> 9ca263150403bf720b3a1011b13c7441503214de
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg
     SOCKETIO.run(
