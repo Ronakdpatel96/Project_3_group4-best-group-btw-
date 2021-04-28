@@ -90,12 +90,16 @@ function App() {
             <a href="https://www.javascript.com/">Javascript</a>
             <a href="https://www.python.org/">Python</a>
           </div>
+          <h2>Special Thanks to:</h2>
+          <div className="links">
+            <a href="https://www.heroku.com/">Heroku</a>
+          </div>
         </div>
         
       </div>
       
       <div className="contact">
-      © Created by Mike, Joe, Ronak, and Karel
+      © Created by Mike Jeong, Joe Passalacqua, Ronak Patel, and Karel Rojas Requena
       </div>
     </div>
     </body>

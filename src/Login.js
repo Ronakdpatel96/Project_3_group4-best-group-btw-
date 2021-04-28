@@ -85,7 +85,7 @@ export function Login() {
                     <br/>
                     <div>
                         <div class="google">
-                            <h3>Login to play:</h3>
+                            <h2>Login to play:</h2>
                             <br/>
                             <GoogleLogin
                             buttonText="Login with Google"
