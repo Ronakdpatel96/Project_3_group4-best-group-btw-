@@ -211,6 +211,10 @@ body{
   text-align:center;
 }
 
+.chat {
+  text-align:right;
+}
+
 .chatting{
   text-align:left;
   height:250px;
