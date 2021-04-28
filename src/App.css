@@ -37,40 +37,45 @@
   }
 }
 
-.title {
+
+.title{
   text-align: center;
   color: white;
-  font-weight: Bold;
+  font-weight:Bold;
   font-size: 100px;
   font-family: Helvetica, sans-serif;
 }
 
-.google {
-  text-align: center;
-  color: white;
+.google{
+  text-align:center;
+  color:white;
 }
 
-.loggedIn {
-  text-align: right;
-  color: white;
+.loggedIn{
+  text-align:right;
+  color:white;
 }
 
-body {
-  background-image: url("chessImage.jpg");
-  background-size: cover;
+
+body{
+  background: url("chessImage.jpg") no-repeat center center fixed;
+  position:absolute;
+  width:100%;
+  top:0;
+  left:0;
 }
 
-.Page2 {
-  color: white;
+.Page2{
+  color:white;
 }
 
 .database-info{
   color:white;
 }
 
-.chessboard{
-  justify-content: center;
-  align-items: center;
+.board {
+  margin: auto;
+  width: 40em
 }
 
 .database-info-holder{
@@ -82,4 +87,8 @@ body {
 }
 .board{
   text-align:center;
+}
+
+h2{
+  color:white;
 }
