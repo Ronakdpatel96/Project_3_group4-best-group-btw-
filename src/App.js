@@ -1,11 +1,12 @@
 import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { Login } from './Login';
-import { Sample } from './board';
+import { Login } from './login/Login';
 import './App.css';
-import BlindChess from "./chessboard.js";
+import BlindChess from "./gameroom/chessboard.js";
 import Header from './components/Header.js';
+import Profile from './profile/Profile';
+import Leaderboard from './leaderboard/Leaderboard';
 
 
 const socket = io();
@@ -30,21 +31,26 @@ function App() {
   return (
     <BrowserRouter>
     
-      <Header />
-      <div className="App">
-       <BlindChess 
-       socket={socket}
-       user_data = {user_data} 
-       user_name = {"White"}/>
-      </div>
+      <Header isLoggedIn={true}/>
       
       <Switch>
-        <Route path='/' component={Login} exact/>
-        <Route path='/chessgame' component={BlindChess}/>
-        <Route path='/leaderboard' component={Sample}/>
+        <Route path='/' component={Login} exact>
+          <Login socket={socket} />
+        </Route> 
+        <Route path='/chessgame' exact>
+          <BlindChess user_data={user_data} socket={socket} user_name={"Black"} />
+        </Route>
+        <Route path='/leaderboard' exact>
+          <Leaderboard />
+        </Route> 
+        <Route path='/profile' exact>
+          <Profile />
+        </Route>
+        <Route path='login' exact>
+          <Login />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
 }
-
 export default App;

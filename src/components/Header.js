@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 
-const Header = () => {
+function Header ({isLoggedIn}){
+    
     return (
         <>
         <h1>Panalty Chess</h1>
@@ -16,6 +17,15 @@ const Header = () => {
             <li>
                 <Link to="/leaderboard">LeaderBoard</Link>
             </li>
+            <li>
+                <Link to="/profile">Profile</Link>
+            </li>
+            {
+                !isLoggedIn ? 
+                <Link to="/login">Log In</Link>
+                :
+                null
+            }
         </ul>
         </>
         );
