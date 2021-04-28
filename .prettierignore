@@ -1,0 +1,5 @@
+# Ignore artifacts:
+App.test.js
+index.js
+reportWebVitals.js
+setupTests.js

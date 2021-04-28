@@ -1,14 +1,14 @@
 import './App.css';
 import { GoogleLogin } from 'react-google-login';
-import { Sample } from './board.js';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import { Sample } from './board';
 import BlindChess from './chessboard.js';
 import Chat from './chat.js';
 import Stats from './Stats.js'
 
-//https://oauth2.googleapis.com/tokeninfo?id_token={token}
+// https://oauth2.googleapis.com/tokeninfo?id_token={token}
 const socket = io();
 
 export function Login() {
