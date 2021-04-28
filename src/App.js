@@ -26,8 +26,7 @@ function App() {
       setStats(statsInfo);
     });
   }, []);
-
-
+  
   return (
     <body>
     <Login Login/>

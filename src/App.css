@@ -211,10 +211,6 @@ body{
   text-align:center;
 }
 
-.chat {
-  text-align:right;
-}
-
 .chatting{
   text-align:left;
   height:250px;
@@ -223,6 +219,11 @@ body{
   font:16px/26px Georgia, Garamond, Serif;
   background-color:black;
   overflow:auto;
+}
+
+.chat{
+  display: flex;
+  justify-content: flex-end
 }
 
 
