@@ -37,6 +37,7 @@ SOCKETIO = SocketIO(APP,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
+
 Spectators = []
 Players = []
 LoginName = []
@@ -132,6 +133,12 @@ def players(data):
     SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
     SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
 
+
+@SOCKETIO.on('chat')
+def on_chat(data):
+    print(data)
+    SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
+    
 
 # Event that will update the two users' databases after a game has ended
 @SOCKETIO.on('finish')
