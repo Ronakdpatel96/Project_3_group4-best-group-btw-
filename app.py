@@ -105,6 +105,11 @@ def on_move(data):
     print(data)
     SOCKETIO.emit('move', data, broadcast=True, include_self=True)
 
+@SOCKETIO.on('on_join')
+def on_join(data):
+    print("on_join ", data)
+    SOCKETIO.emit('on_join', data, broadcast=True, include_self=True)
+
 
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call SOCKETIO.run with app arg

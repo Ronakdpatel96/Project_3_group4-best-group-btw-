@@ -1,12 +1,13 @@
 import io from 'socket.io-client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Login } from './login/Login';
 import './App.css';
-import BlindChess from "./gameroom/chessboard.js";
+import Gameroom from "./gameroom/Gameroom.js";
 import Header from './components/Header.js';
-import Profile from './profile/Profile';
-import Leaderboard from './leaderboard/Leaderboard';
+import Profile from './profile/Profile.js';
+import Leaderboard from './leaderboard/Leaderboard.js';
+import Landing from './Landing.js';
 
 
 const socket = io();
@@ -28,17 +29,27 @@ function App() {
     });
   }, []);
 
+
+  const [test_username, setTestUser ] = useState("");
+  const inputRef = useRef(null);
+  function onClickButton() {
+    if (inputRef != null && inputRef.current.value != "") {
+      const userName = inputRef.current.value;
+      setTestUser(prev => userName);
+    }
+  }
+
   return (
     <BrowserRouter>
-    
       <Header isLoggedIn={true}/>
-      
       <Switch>
-        <Route path='/' component={Login} exact>
-          <Login socket={socket} />
+        <Route path='/' exact>
+          <Landing />
         </Route> 
-        <Route path='/chessgame' exact>
-          <BlindChess user_data={user_data} socket={socket} user_name={"Black"} />
+        <Route path='/gameroom' exact>
+          <Gameroom socket={socket} user_name={test_username}/>
+              Enter User Name here: <input ref={inputRef} type="text" />
+    <button onClick={onClickButton}>Set Username</button>
         </Route>
         <Route path='/leaderboard' exact>
           <Leaderboard />
@@ -47,7 +58,7 @@ function App() {
           <Profile />
         </Route>
         <Route path='login' exact>
-          <Login />
+          <Login socket={socket}/>
         </Route>
       </Switch>
     </BrowserRouter>

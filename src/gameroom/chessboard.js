@@ -56,17 +56,37 @@ export default function BlindChess({user_data, socket, user_name}) {
       return;
     }
     
+    
+    const spectator = user_data.Spectator;
+    
+    if (spectator.includes(user_name)) {
+      return;
+    }
+    
     console.log(sourceSquare, targetSquare);
     const game = new Chess(gameFen);
     // see if the move is legal
+    
+    
+    const turn = game.fen() === "start" || game.fen().search(/w/) !== -1 ? "White": "Black";
+    
+    if (user_name === user_data.White && turn != "White") {
+      return;
+    }
+    if (user_name === user_data.Black && turn != "Black") {
+      return;
+    }
+    
     let move = game.move({
       from: sourceSquare,
       to: targetSquare,
       promotion: "q" // always promote to a queen for example simplicity
     });
+    
+    
     // illegal move
     if (move === null) {
-      //alert("You lose due to illegal move");
+      alert("You lose due to illegal move", sourceSquare, targetSquare);
       console.log("illegal move");
       return;
     };
@@ -134,8 +154,25 @@ export default function BlindChess({user_data, socket, user_name}) {
     else {
       GameInfo=turn + " to Play";
     }
+    
+    let Role="";
+    
+    if (user_name === user_data.White ) {
+      Role = "White";
+    }
+    else if (user_name === user_data.Black ) {
+      Role = "Black";
+    }
+    else {
+      Role = "Spectator";
+    }
+    
+    
+    
+    
     return (<div className="chessInfo">
       <h1> {GameInfo} </h1>
+      <h1> You are playing as {Role}</h1>
       <ol> {list_moves.map((move) => <li>{move}</li>)} </ol>
       
       </div>
@@ -148,12 +185,12 @@ export default function BlindChess({user_data, socket, user_name}) {
     }
     
     
-    if (user_name == "White") {
+    if (user_name == user_data.White) {
       setFen("rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3");
       const data = { FEN: "rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3" , history: []};
       socket.emit('move', data);
     }
-    else if (user_name == "Black") {
+    else if (user_name == user_data.Black) {
       setFen("rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3");
       const data = { FEN: "rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3" , history: []};
      socket.emit('move', data);
@@ -194,7 +231,7 @@ export default function BlindChess({user_data, socket, user_name}) {
         bB: optionBlack,
         bP: optionBlack
       }}
-      orientation={username}
+      orientation={user_name === user_data.Black ? "Black" : "White"}
     />
     
     {chessInfo()}
@@ -202,10 +239,7 @@ export default function BlindChess({user_data, socket, user_name}) {
     {Chess(gameFen).in_checkmate() ? <button onClick={() => replay()}>Play Again</button> : ""}
     
     <br/>
-    
-    Enter User Name here: <input ref={inputRef} type="text" />
-    <button onClick={onClickButton}>Set Username</button>
-    Playing as {username}
+
     </div>
   );
 }

@@ -11,7 +11,7 @@ function Header ({isLoggedIn}){
             </li>
             
             <li>
-                <Link to="/chessgame">ChessBoard</Link>
+                <Link to="/gameroom">Game Room</Link>
             </li>
             
             <li>
