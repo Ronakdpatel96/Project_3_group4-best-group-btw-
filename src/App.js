@@ -1,28 +1,13 @@
 import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import { Login } from './Login';
-import { Sample } from './board';
+//import logo from './logo.svg';
+import {Login} from './Login.js';
 import './App.css';
 
 const socket = io();
 
 function App() {
-  const [shown, setShown] = useState(false);
-  const [stats, setStats] = useState([]);
-
-  function showStats() {
-    setShown((prevShown) => !prevShown);
-  }
-
-  useEffect(() => {
-    socket.on('statistics', (statsInfo) => {
-      console.log('Statistics event received!');
-      console.log(statsInfo);
-      setStats(statsInfo);
-    });
-  }, []);
-
+ 
   return (
     <body>
     <Login Login/>

@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import { Sample } from './board';
 import BlindChess from './chessboard.js';
 import Chat from './chat.js';
+import Stats from './Stats.js'
 
 // https://oauth2.googleapis.com/tokeninfo?id_token={token}
 const socket = io();
@@ -18,57 +19,104 @@ export function Login() {
     const [shown, setShown] = useState(false);
     const [stats, setStats] = useState([]);
     
-    function showStats() {
-    setShown((prevShown) => !prevShown);
-    }
-    
-    
-    console.log("Is the user logged in? ",Login);
+
+    console.log("Is the user logged in? ", Login);
+
     if(Login == true){
         console.log(user);
         console.log(emailName);         //User and email would be used to update the database.
         console.log("Time to change page"); //will have to link this to switchPage to try and switch the page to the next one
         socket.emit('login', { user: user , email: emailName});
+        socket.emit('joined', { user: user , email: emailName});
         setLogin(false);
         }
-        
+    
+    //console.log("User", user);
+
     
     const responseGoogle = (response) => {
-        console.log(response);
-        console.log(response['tokenId']);
-        
+        //console.log(response);
+       // console.log(response['tokenId']);
         const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
         
         axios.get(url)
-            .then(name => { 
+            .then(name => {
                 const userName = name['data']['given_name'];
-                
+                const emailUser = name['data']['email'];
                 
                 console.log(name['data']['given_name']);
                 console.log("userName",userName);
+                
                 setUser(setName => userName);
-            });
-            
-            
-        axios.get(url)
-            .then(email => {
-                const emailUser = email['data']['email'];
-                console.log(email['data']['email']);
-                console.log("emailUser",emailUser);
+                socket.emit('user', {user:user});
                 setEmail(setName => emailUser);
+                
                 setLogin(true);
                 setPage(true);
             });
+    };
+    
+    const [Player, setPlayer] = useState([]);
+    const [PlayerE, setPlayerE] = useState([]);
+    const [Spectator, setSpectator] = useState([]);
+    const [user1, setUser1] = useState([]);
+
+
+  
+    useEffect(() => {
+            socket.on('LoginName', (LoginName) => {
+              console.log('New Player was added to the game');
+              console.log("current Player",LoginName);
+              var userName = LoginName;
+              setUser1( name => userName);
+            });
+            socket.on('Players', (Players) => {
+                console.log("Players",Players);
+                setPlayer(stats => Players);
+            });
             
-        //Need to change the webpage to the next page once logged in
-        };
+            socket.on('Emails', (Emails) => {
+                console.log(Emails);
+                setPlayerE(stats => Emails);
+            });
+            
+            socket.on('Spectators', (Spectators) => {
+                console.log(Spectators);
+                setSpectator(stats => Spectators);
+            });
+            
+        }, []);
+        
+        
+    const player1 = Player[0];
+    const player2 = Player[1];
     
+    const player1E = PlayerE[0];
+    const player2E = PlayerE[1];
+
     
+    const user_data = { 'Black': player1, 'White': player2, 'Spectator' : Spectator };
+    
+    console.log(user_data);
+    console.log(player1E,player2E);
+    
+    console.log("Two Players: ",player1,player2); 
+    var color;
+    if(user == player1 && emailName == player1E ){
+        color = 'White';
+    }
+    else if(user == player2 && emailName == player2E){
+        color = 'Black';
+    }
+    else{
+        color = 'Spectator';
+    }
+
     return(
         <div class="login">
             <head>
                 <title>Penalty chess login page</title>
-                <meta name="google-signin-client_id" content="343458998580-grsva1siatfujrucu7b75hug4hocopsg.apps.googleusercontent.com"/>
+                <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
                 <script src="https://apis.google.com/js/platform.js" async defer></script>
             </head>
             <div class="header">
@@ -108,36 +156,28 @@ export function Login() {
                 <div class='Page2'>
                 {page === false ? null : (
                     <div class="chessBoard">
-                        <div className="board">
-                            <BlindChess/>
+            
+                        <div class="google" >
+                            <h1>Hello: {user}</h1>
+                            <h2>Players: {player1}, {player2}</h2>
+                            <h2> Spectators: {Spectator} </h2>
                         </div>
-                        <div className="chat">
+                        <div className="board" id={user}>
+                            <BlindChess
+                             socket={socket}
+                             user_data={user_data}
+                             user_name={color}
+                             />
+                        </div>
+                        <div className="chat" >
                             <Chat className="chat"/>
                         </div>
-                        <div className="database-info-holder">
-                        <button class="stats" type="button" onClick={showStats}> Show/Hide Stats </button>
-                        { shown === true ? (
-                        <div className="database-info">
-                          Name:&nbsp;
-                          {stats[0]}
-                          <br />
-                          Email:&nbsp;
-                          {stats[1]}
-                          <br />
-                          Record:&nbsp;
-                          {stats[2]}
-                          -
-                          {stats[3]}
-                          -
-                          {stats[4]}
-                          <br />
-                          Rank:&nbsp;
-                          {stats[5]}
-                          <br />
-                          {stats[6]}
+
+                        
+                        <div className="Stats">
+                            <Stats className="Stats"/>
                         </div>
-                        ) : null }
-                        </div>
+
                     </div> )}
                 
                 </div>
