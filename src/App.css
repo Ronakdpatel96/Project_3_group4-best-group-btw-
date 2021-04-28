@@ -37,6 +37,9 @@
   }
 }
 
+ul {
+  list-style:none;
+}
 
 html, body {
   height: 100%;
@@ -183,7 +186,6 @@ a {
   background: linear-gradient(to bottom, rgba(237, 255, 253,0) 0%,rgba(237, 255, 253,0) 75%,rgba(237, 255, 253,1) 100%);
 }
 
-
 body{
   background: url("chessImage.jpg") no-repeat center center fixed;
   position:absolute;
@@ -209,9 +211,17 @@ body{
   text-align:center;
 }
 
-.chat{
-  text-align:right;
+.chatting{
+  text-align:left;
+  height:250px;
+  width:300px;
+  border:1px solid #ccc;
+  font:16px/26px Georgia, Garamond, Serif;
+  background-color:black;
+  overflow:auto;
 }
+
+
 .board{
   text-align:center;
 }

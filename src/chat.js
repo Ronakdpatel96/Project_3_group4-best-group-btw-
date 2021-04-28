@@ -18,19 +18,17 @@ export default function Chat() {
     }
     
     useEffect(() => {
-    
         socket.on('chat', (data) => {
-            setMessages((prevMessage) => [...prevMessage, data.new_message]);
+            setMessages((prevMessages) => [...prevMessages, data.new_message]);
         });
-    
     }, []);
     
     return(
-        <div>
+        <div class="chatting">
             <input ref={inputRef} type="text" />
-            <button type="button" onClick={onClickButton}>
-                Send Message
-            </button>
+                <button type="button" onClick={onClickButton}>
+                    Send Message
+                </button>
             <ul>
                 {messages.map((item,index) => (
                     <li>{item}</li>

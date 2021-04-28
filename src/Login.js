@@ -18,7 +18,7 @@ export function Login() {
     const [emailName, setEmail] = useState([]);
     const [shown, setShown] = useState(false);
     const [stats, setStats] = useState([]);
-    
+    const [messages, setMessages] = useState([]);
 
     console.log("Is the user logged in? ", Login);
 
@@ -37,7 +37,7 @@ export function Login() {
     const responseGoogle = (response) => {
         //console.log(response);
        // console.log(response['tokenId']);
-        const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
+        const url = 'https://164fa2839bfc44bd9df6ce370909f882.vfs.cloud9.us-east-1.amazonaws.com'
         
         axios.get(url)
             .then(name => {
@@ -83,6 +83,10 @@ export function Login() {
             socket.on('Spectators', (Spectators) => {
                 console.log(Spectators);
                 setSpectator(stats => Spectators);
+            });
+            
+            socket.on('chat', (data) => {
+                setMessages((prevMessages) => [...prevMessages, data.new_message]);
             });
             
         }, []);
