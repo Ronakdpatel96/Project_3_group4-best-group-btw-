@@ -221,6 +221,11 @@ body{
   overflow:auto;
 }
 
+.chat{
+  display: flex;
+  justify-content: flex-end
+}
+
 
 .board{
   text-align:center;
