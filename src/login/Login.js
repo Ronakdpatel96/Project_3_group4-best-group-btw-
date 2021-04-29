@@ -11,6 +11,9 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
     const [Login, setLogin] = useState(false);
     const [page, setPage] = useState(false);
 
+    
+    
+    
     console.log("Is the user logged in? ",Login);
     if(Login == true){
         console.log(user);

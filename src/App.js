@@ -30,10 +30,10 @@ function App() {
           <Gameroom socket={socket} user_name={emailName}/>
         </Route>
         <Route path='/leaderboard' exact>
-          <Leaderboard />
+          <Leaderboard socket={socket} user_name={user} email_name={emailName}/>
         </Route> 
         <Route path='/profile' exact>
-          <Profile />
+          <Profile username={user} email={emailName} socket={socket}/>
         </Route>
         <Route path='/login' exact>
         {user === "" ? 

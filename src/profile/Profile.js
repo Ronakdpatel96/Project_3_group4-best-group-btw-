@@ -1,5 +1,9 @@
 /* eslint-disable */
-export function Profile({username}) {
-  return <h1>This will Profile</h1>;
+export function Profile({username, email, socket}) {
+  return (
+  <div>
+      <h1>{username}</h1>
+      <h2>{email}</h2>
+  </div>);
 }
 export default Profile;

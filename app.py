@@ -150,13 +150,6 @@ def on_finish():
 def on_move(data):
     print(data)
     SOCKETIO.emit('move', data, broadcast=True, include_self=True)
-    
-
-
-@SOCKETIO.on('move')
-def on_move(data):
-    print(data)
-    SOCKETIO.emit('move', data, broadcast=True, include_self=True)
 
 @SOCKETIO.on('on_join')
 def on_join(data):

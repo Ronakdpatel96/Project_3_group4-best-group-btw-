@@ -15,3 +15,11 @@
 div {
   color: white;
 }
+
+img {
+  animation: fadeIn 1s;
+  border-radius: 15px;
+  height: 350px;
+  transition-timing-function: ease;
+  transition: width 2s, height 2s, transform 2s;
+}
