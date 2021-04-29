@@ -84,6 +84,7 @@ export function Login() {
             });
             
             socket.on('chat', (data) => {
+                console.log('this is a pointless change for the sake of commiting');
                 setMessages((prevMessages) => [...prevMessages, data.new_message]);
             });
             
