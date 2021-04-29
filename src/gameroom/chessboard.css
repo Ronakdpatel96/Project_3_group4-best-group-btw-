@@ -1,0 +1,17 @@
+.piece {
+  height: 50px;
+  width: 50px;
+}
+
+.chessInfo {
+  color: white;
+}
+
+.ChessBoard {
+  margin: auto;
+  width: 30em
+}
+
+div {
+  color: white;
+}
