@@ -2,7 +2,6 @@ import io from 'socket.io-client';
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Login } from './Login';
-import { Sample } from './board';
 //import logo from './logo.svg';
 //import logo from './logo.svg';
 import './App.css';
