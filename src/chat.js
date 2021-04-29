@@ -25,15 +25,15 @@ export default function Chat() {
     
     return(
         <div class="chatting">
-            <input ref={inputRef} type="text" />
-                <button type="button" onClick={onClickButton}>
-                    Send Message
-                </button>
             <ul>
                 {messages.map((item,index) => (
                     <li>{item}</li>
                 ))}
             </ul>
+            <input ref={inputRef} type="text" />
+            <button type="button" onClick={onClickButton}>
+                Send Message
+            </button>
         </div>
     );
     
