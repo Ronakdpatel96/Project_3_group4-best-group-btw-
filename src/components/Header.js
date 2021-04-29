@@ -5,7 +5,7 @@ function Header ({isLoggedIn}){
     
     return (
         <>
-        <h1>Panalty Chess</h1>
+        <h1>Penalty Chess</h1>
         <ul className="nav">
             <li>
                 <Link to="/">Home</Link>

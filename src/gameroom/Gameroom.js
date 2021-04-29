@@ -39,7 +39,7 @@ export function Gameroom({socket, user_name}) {
     
     function gameStart() {
         if (!join) {
-            return <button onClick={() => onClickJoin()}> Click to Join </button>;
+            return <button onClick={() => onClickJoin()} class="join"> Click to Join </button>;
         }
         
         if (user_data.length < 2) {

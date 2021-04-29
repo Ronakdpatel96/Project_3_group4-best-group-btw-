@@ -94,6 +94,7 @@ h2 {
   font-size: xxx-large;
   text-shadow: 2px 2px #a1a1a1;
   font-family: Helvetica, sans-serif;
+  color: #343434;
 }
 
 .about {
@@ -236,4 +237,8 @@ body{
   width: 500px;
   display: flex;
   justify-content: space-evenly;
+}
+
+.join {
+  margin: 10px;
 }
