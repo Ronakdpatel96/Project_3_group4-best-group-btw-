@@ -226,6 +226,9 @@ body{
   justify-content: flex-end
 }
 
+.box{
+  Text-align:right;
+}
 
 .board{
   text-align:center;

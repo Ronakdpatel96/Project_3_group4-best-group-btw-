@@ -2,6 +2,7 @@ import React, { useState,  useRef, useEffect } from "react";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
 import './chessboard.css';
+import Chat from "./chat.js";
 
 export default function BlindChess({user_data, socket, user_name}) {
   const [username, setUsername] = useState("");
@@ -215,7 +216,9 @@ export default function BlindChess({user_data, socket, user_name}) {
 
   
   
-  return (<div className="ChessBoard">
+  return (
+    <div>
+    <div className="ChessBoard">
     <Chessboard
       id="chessBoard"
       width={640}
@@ -247,7 +250,17 @@ export default function BlindChess({user_data, socket, user_name}) {
     {Chess(gameFen).in_checkmate() && user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => replay()}>Play Again</button> : ""}
     
     <br/>
-
+    </div>
+    
+    <div class="box">
+      <h2>Chat with other players:</h2>
+      <br/>
+      <br/>
+        <div className="chat" >
+          <Chat className="chat"/>
+        </div>
+    </div>
+    
     </div>
   );
 }

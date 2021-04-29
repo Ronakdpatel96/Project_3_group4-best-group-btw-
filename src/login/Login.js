@@ -1,9 +1,7 @@
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import BlindChess from '../gameroom/chessboard.js';
-import Chat from '../chat.js';
+import Header from '../components/Header.js';
 
 // https://oauth2.googleapis.com/tokeninfo?id_token={token}
 
@@ -67,9 +65,7 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
                     <h4>{emailName}</h4>
                 </div>
                 
-                {page == true ? null : (
                 <div class='Page1'>
-                <h1 class="title">Penalty Chess</h1>
                 
                 <br/>
                 <br/>
@@ -89,7 +85,7 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
                         />
                         </div>
                     </div>
-                </div> )}
+                </div>
                 
                 
             </body>
