@@ -57,7 +57,16 @@ def index(filename):
 def on_connect():
     ''' When a client connects from this Socket connection, this function is run '''
     print('User connected!')
-
+    all_people = Person.query.order_by(Person.rank).all()
+    print(all_people)
+    users = []
+    for person in all_people:
+        user = []
+        user.append(person.username)
+        user.append(person.rank)
+        users.append(user)
+    print(users)
+    SOCKETIO.emit('leaderboard', users, broadcast=True, include_self=True)
 
 @SOCKETIO.on('disconnect')
 def on_disconnect():

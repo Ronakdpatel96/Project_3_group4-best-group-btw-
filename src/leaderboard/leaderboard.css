@@ -1,0 +1,13 @@
+.leaderboard {
+    background: rgb(237, 255, 253);
+    border-radius: 15px;
+    margin: 50px;
+}
+
+
+.leaderboard-info {
+    text-align: center;
+    color: #343434;
+    margin: 10px;
+    font-family: Helvetica, sans-serif;
+}
