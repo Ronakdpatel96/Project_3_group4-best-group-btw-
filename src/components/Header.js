@@ -5,7 +5,9 @@ function Header ({isLoggedIn}){
     
     return (
         <>
-        <h1>Penalty Chess</h1>
+        <h1>
+            <Link to="/">Penalty Chess</Link>
+        </h1>
         <ul className="nav">
             <li>
                 <Link to="/">Home</Link>
@@ -22,6 +24,9 @@ function Header ({isLoggedIn}){
                 </li>
                 <li>
                     <Link to="/profile">Profile</Link>
+                </li>
+                <li>
+                    <Link to="/logout">Log out</Link>
                 </li>
                 </>
                 :

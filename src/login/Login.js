@@ -10,7 +10,14 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
     const [page, setPage] = useState(false);
 
     
-    
+    useEffect(() => {
+        
+        const is_logged_in = user !== "" && emailName !== "";
+        if (is_logged_in) {
+          setLogin(true);
+          setPage(true);
+        }
+    }, []);
     
     console.log("Is the user logged in? ",Login);
     if(Login == true){
@@ -19,7 +26,7 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         console.log("Time to change page"); //will have to link this to switchPage to try and switch the page to the next one
         socket.emit('login', { user: user , email: emailName});
         setLogin(false);
-        }
+    }
         
     
     const responseGoogle = (response) => {
@@ -27,12 +34,11 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         console.log(response['tokenId']);
         
         const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
-        
+
         axios.get(url)
             .then(name => { 
                 const userName = name['data']['given_name'];
-                
-                
+                localStorage.setItem('username', userName);
                 console.log(name['data']['given_name']);
                 console.log("userName",userName);
                 setUser(setName => userName);
@@ -42,55 +48,46 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         axios.get(url)
             .then(email => {
                 const emailUser = email['data']['email'];
+                localStorage.setItem('email', emailUser);
+                
+                
                 console.log(email['data']['email']);
                 console.log("emailUser",emailUser);
+                
                 setEmail(setName => emailUser);
                 setLogin(true);
                 setPage(true);
             });
             
         //Need to change the webpage to the next page once logged in
+        
+        
+        
         };
+    
+
     
     return(
         <div class="login">
-            <head>
-                <title>Penalty chess login page</title>
-                <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
-                <script src="https://apis.google.com/js/platform.js" async defer></script>
-            </head>
-            <body>
-                <div class="loggedIn">
-                    <h4>{user}</h4>
-                    <h4>{emailName}</h4>
-                </div>
-                
-                <div class='Page1'>
-                
-                <br/>
-                <br/>
-                <br/>
-            
-                <div>
-                    <div class="google">
-                
+            <meta name="google-signin-client_id" content="343458998580-0n44n2lqssm0s59tnobhtacdnsmjs302.apps.googleusercontent.com"/>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            <div>
+                <div class="google">
                     <h3>Login to play:</h3>
-                    
-                            <br/>
-                            <GoogleLogin
+                        <br/>
+                        <GoogleLogin
                             buttonText="Login with Google"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
                         />
-                        </div>
-                    </div>
+                        <br/>
+                        <br/>
+                        <br/><br/><br/>
                 </div>
-                
-                
-            </body>
+            </div>
         </div> 
-);
+    );
 }
 
 export default Login;

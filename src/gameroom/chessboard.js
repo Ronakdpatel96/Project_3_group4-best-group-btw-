@@ -186,7 +186,6 @@ export default function BlindChess({user_data, socket, user_name}) {
       return;
     }
     
-    
     if (user_name == user_data.White) {
       setFen("rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3");
       const data = { FEN: "rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3" , history: []};
@@ -214,52 +213,78 @@ export default function BlindChess({user_data, socket, user_name}) {
   }
   
 
-  
+  function ChessGame() {
+    
+    
+    
+    if ((user_name === user_data.Black || user_name === user_data.White)) {
+      return (
+        <div className="ChessBoard">
+        <Chessboard
+          id="chessBoard"
+          width={640}
+          position={gameFen}
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: "5px",
+            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+          }}
+          pieces={{
+            wK: optionWhite,
+            wQ: optionWhite,
+            wN: optionWhite,
+            wR: optionWhite,
+            wB: optionWhite,
+            wP: optionWhite,
+            bK: optionBlack,
+            bQ: optionBlack,
+            bN: optionBlack,
+            bR: optionBlack,
+            bB: optionBlack,
+            bP: optionBlack
+          }}
+          orientation={user_name === user_data.Black ? "Black" : "White"}
+        />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="ChessBoard">
+        <Chessboard
+          id="chessBoard"
+          width={640}
+          position={gameFen}
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: "5px",
+            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+          }}
+          orientation={user_name === user_data.Black ? "Black" : "White"}
+        />
+        </div>
+      )
+    }
+  }
   
   return (
     <div>
-    <div className="ChessBoard">
-    <Chessboard
-      id="chessBoard"
-      width={640}
-      position={gameFen}
-      onDrop={onDrop}
-      boardStyle={{
-        borderRadius: "5px",
-        boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-      }}
-      pieces={{
-        wK: optionWhite,
-        wQ: optionWhite,
-        wN: optionWhite,
-        wR: optionWhite,
-        wB: optionWhite,
-        wP: optionWhite,
-        bK: optionBlack,
-        bQ: optionBlack,
-        bN: optionBlack,
-        bR: optionBlack,
-        bB: optionBlack,
-        bP: optionBlack
-      }}
-      orientation={user_name === user_data.Black ? "Black" : "White"}
-    />
-    
-    {chessInfo()}
-    {user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => resign()}>Resign </button> : null}
-    {Chess(gameFen).in_checkmate() && user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => replay()}>Play Again</button> : ""}
-    
-    <br/>
-    </div>
-    
-    <div class="box">
-      <h2>Chat with other players:</h2>
+      <div>
+        {ChessGame()}
+        {chessInfo()}
+        {user_data.Black === user_name || user_data.White === user_name ? <button onClick={() => resign()}>Resign </button> : null}
+        {Chess(gameFen).in_checkmate() && (user_data.Black === user_name || user_data.White == user_name) ? <button onClick={() => replay()}>Play Again</button> : ""}
       <br/>
-      <br/>
-        <div className="chat" >
-          <Chat className="chat"/>
-        </div>
-    </div>
+      </div>
+    
+      <div class="box">
+        <h2>Chat with other players:</h2>
+        <br/>
+        <br/>
+          <div className="chat" >
+            <Chat className="chat"/>
+          </div>
+      </div>
     
     </div>
   );

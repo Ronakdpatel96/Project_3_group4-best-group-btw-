@@ -11,7 +11,7 @@ export default function Chat() {
     function onClickButton() {
         if (inputRef != null) {
             const message = inputRef.current.value;
-            
+            inputRef.current.value = "";
             setMessages((prevMessages) => [...prevMessages, message]);
             socket.emit('chat', { new_message : message });
         }
