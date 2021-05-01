@@ -4,6 +4,12 @@ import LeaderRow from '../LeaderRow';
 import './leaderboard.css'
 export function Leaderboard({username, socket}) {
     const [userlist, setUserlist] = useState([]);
+    const [update, setUpdate] = useState(true);
+    
+    if (update){
+      socket.emit('leaderboard');
+      setUpdate((prevUpdate) => !prevUpdate);
+    }
     
     useEffect(() => {
       socket.on("leaderboard", (data) => {
@@ -22,7 +28,7 @@ export function Leaderboard({username, socket}) {
               </thead>
               <tbody>
                 {userlist.map((item, index) => (
-                  <LeaderRow key={index} user={item[0]} score={item[1]} />
+                  <LeaderRow key={index} user={item[0]} score={item[1]} win={item[2]} loss={item[3]} tie={item[4]} />
                 ))}
               </tbody>
             </table>
