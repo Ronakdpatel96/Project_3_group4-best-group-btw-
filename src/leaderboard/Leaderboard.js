@@ -2,7 +2,7 @@
 import React, { useState,  useRef, useEffect } from "react";
 import LeaderRow from '../LeaderRow';
 import './leaderboard.css'
-export function Leaderboard({username, socket}) {
+export function Leaderboard({user_name, email_name, socket}) {
     const [userlist, setUserlist] = useState([]);
     const [update, setUpdate] = useState(true);
     
@@ -20,6 +20,9 @@ export function Leaderboard({username, socket}) {
   return (
     <div class="leaderboard">
         <div class="leaderboard-info">
+            <div class="information">
+              {user_name}
+            </div>
             <table>
               <thead>
                 <tr>
