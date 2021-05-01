@@ -20,9 +20,6 @@ export function Leaderboard({user_name, email_name, socket}) {
   return (
     <div class="leaderboard">
         <div class="leaderboard-info">
-            <div class="information">
-              {user_name}
-            </div>
             <table>
               <thead>
                 <tr>
