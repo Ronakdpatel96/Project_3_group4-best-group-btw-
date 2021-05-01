@@ -66,7 +66,7 @@ def on_disconnect():
 
 def database_check(user, email_address):
     ''' Checks if a user is already in the database'''
-    check = Person.query.filter_by(username=user).first()
+    check = Person.query.filter_by(email=email_address).first()
     if check is None:
         new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
         DB.session.add(new_user)
@@ -100,7 +100,24 @@ def on_login(data):
     print(stats)
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)
-    
+
+@SOCKETIO.on('profile')
+def on_profile(data):
+    print("profile ", data)
+    stats = database_check(data['user'], data['email'])
+    stats_info = []
+    stats_info.append(data['user'])
+    stats_info.append(data['email'])
+    stats_info.append(stats.win)
+    stats_info.append(stats.loss)
+    stats_info.append(stats.tie)
+    stats_info.append(stats.rank)
+    stats_info.append(add_rank_statement(stats.rank))
+    print(stats)
+    print(stats_info)
+    SOCKETIO.emit('profile', stats_info, include_self=True)
+
+
 @SOCKETIO.on('joined')
 def players(data):
     #global LoginName
