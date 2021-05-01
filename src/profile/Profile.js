@@ -27,6 +27,7 @@ function Profile({ socket, username, email }) {
   }, [ shown ]);
 
   return (
+<<<<<<< HEAD
     <div>
     
       <div className="database-info-holder">
@@ -56,6 +57,12 @@ function Profile({ socket, username, email }) {
     
     </div>
   );
+=======
+  <div class="profile">
+      <h1>{username}</h1>
+      <h2>{email}</h2>
+  </div>);
+>>>>>>> bf0cd399622cc0e163ebaaefb5400b74b7f39c3e
 }
 
 export default Profile;

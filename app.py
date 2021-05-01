@@ -58,7 +58,6 @@ def on_connect():
     ''' When a client connects from this Socket connection, this function is run '''
     print('User connected!')
 
-
 @SOCKETIO.on('disconnect')
 def on_disconnect():
     ''' When a client disconnects from this Socket connection, this function is run '''
