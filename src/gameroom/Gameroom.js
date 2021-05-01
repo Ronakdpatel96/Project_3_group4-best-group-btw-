@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BlindChess from './chessboard.js';
+import Chat from './chat.js';
 /* eslint-disable */
 export function Gameroom({socket, user_name}) {
     
@@ -54,7 +55,7 @@ export function Gameroom({socket, user_name}) {
     
     return (
     <div>
-      {gameStart()}  
+      {gameStart()}
     </div>
     );
 }

@@ -282,7 +282,7 @@ export default function BlindChess({user_data, socket, user_name}) {
         <br/>
         <br/>
           <div className="chat" >
-            <Chat className="chat"/>
+            <Chat socket={socket} user_name={user_name} />
           </div>
       </div>
     

@@ -1,20 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client';
 
-const socket = io(); 
 
-export default function Chat() {
+
+
+export default function Chat({socket, user_name}) {
     
     const [messages, setMessages] = useState([]);
     const inputRef = useRef(null);
     
     function onClickButton() {
-        if (inputRef != null) {
-            const message = inputRef.current.value;
-            inputRef.current.value = "";
-            setMessages((prevMessages) => [...prevMessages, message]);
-            socket.emit('chat', { new_message : message });
+        //console.log("inputRef", inputRef.current.value === "" );
+        if (inputRef.current.value === null || inputRef.current.value === "") {
+            return;
         }
+        
+        const message = inputRef.current.value;
+        inputRef.current.value = "";
+        const time = new Date();
+        const currentTime = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
+        
+        const newMessage = user_name + "  :  " + message + "  /  " + currentTime;
+        
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        socket.emit('chat', { new_message : newMessage });
+    
     }
     
     useEffect(() => {

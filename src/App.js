@@ -79,8 +79,8 @@ function App() {
         <Route path='/' >
           <Redirect to='/' />
         </Route>
-
       </Switch>
+
     </BrowserRouter>
   );
 }

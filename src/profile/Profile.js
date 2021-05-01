@@ -23,7 +23,7 @@ function Profile({ socket, username, email }) {
       console.log(statsInfo);
       setStats(statsInfo);
     });
-    console.log("Useeffect run in Profile");
+    //console.log("Useeffect run in Profile");
   }, [ shown ]);
 
   return (
