@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BlindChess from './chessboard.js';
+import Chat from './chat.js';
 /* eslint-disable */
 export function Gameroom({socket, user_name}) {
     
@@ -47,14 +48,14 @@ export function Gameroom({socket, user_name}) {
         }
         
         const prop_data = {White: user_data[0], Black: user_data[1], Spectator: user_data.slice(2)}
-        
+        //<Redirect to = {"/game/" + this.state.gameId}><button className="btn btn-success" style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px"}}>Start Game</button></Redirect>
         return <BlindChess socket={socket} user_name={user_name} user_data={prop_data}/>;
     }
     
     
     return (
     <div>
-      {gameStart()}  
+      {gameStart()}
     </div>
     );
 }

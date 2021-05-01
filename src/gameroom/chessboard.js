@@ -1,23 +1,13 @@
-import React, { useState,  useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
 import './chessboard.css';
+import Chat from "./chat.js";
 
 export default function BlindChess({user_data, socket, user_name}) {
-  const [username, setUsername] = useState("");
   const [gameFen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const [history, setHistory] = useState([]);
-  
-  const inputRef = useRef(null);
 
-  function onClickButton() {
-    if (inputRef != null && inputRef.current.value != "") {
-      const userName = inputRef.current.value;
-      setUsername(prev => userName);
-    }
-  }
-  
-  
   useEffect(() => {
     socket.on("move", (data) => {
       
@@ -38,7 +28,7 @@ export default function BlindChess({user_data, socket, user_name}) {
             src={WhiteImage}
             alt={"whitepieces"}
           />
-        )
+        );
         
   const optionBlack =  ({ squareWidth, isDragging }) => (
           <img
@@ -49,7 +39,7 @@ export default function BlindChess({user_data, socket, user_name}) {
             src={BlackImage}
             alt={"blackpieces"}
           />
-        )
+        );
 
   const onDrop = ({ sourceSquare, targetSquare }) => {
     if (sourceSquare === targetSquare) {
@@ -90,7 +80,7 @@ export default function BlindChess({user_data, socket, user_name}) {
       alert("You lose due to illegal move", sourceSquare, targetSquare);
       console.log("illegal move");
       return;
-    };
+    }
     
     
     
@@ -141,15 +131,19 @@ export default function BlindChess({user_data, socket, user_name}) {
     if (game.in_checkmate()) {
       if (turn == "Black") {
         GameInfo="White won by checkmate";
+        socket.emit('finish', {win: user_data.White, lose: user_data.Black});
       }
       else {
         GameInfo="Black won by checkmate";
+        socket.emit('finish', {win: user_data.Black, lose: user_data.White});
       }
     }
     else if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
+      socket.emit('draw', [user_data.White, user_data.Black]);
       GameInfo="Draw by stalemate";
     }
     else if (game.insufficient_material()) {
+      socket.emit('draw', [user_data.White, user_data.Black]);
       GameInfo="Draw by insufficient material";
     }
     else {
@@ -185,7 +179,6 @@ export default function BlindChess({user_data, socket, user_name}) {
       return;
     }
     
-    
     if (user_name == user_data.White) {
       setFen("rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3");
       const data = { FEN: "rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3" , history: []};
@@ -213,41 +206,79 @@ export default function BlindChess({user_data, socket, user_name}) {
   }
   
 
-  
-  
-  return (<div className="ChessBoard">
-    <Chessboard
-      id="chessBoard"
-      width={640}
-      position={gameFen}
-      onDrop={onDrop}
-      boardStyle={{
-        borderRadius: "5px",
-        boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-      }}
-      pieces={{
-        wK: optionWhite,
-        wQ: optionWhite,
-        wN: optionWhite,
-        wR: optionWhite,
-        wB: optionWhite,
-        wP: optionWhite,
-        bK: optionBlack,
-        bQ: optionBlack,
-        bN: optionBlack,
-        bR: optionBlack,
-        bB: optionBlack,
-        bP: optionBlack
-      }}
-      orientation={user_name === user_data.Black ? "Black" : "White"}
-    />
+  function ChessGame() {
     
-    {chessInfo()}
-    {user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => resign()}>Resign </button> : null}
-    {Chess(gameFen).in_checkmate() && user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => replay()}>Play Again</button> : ""}
     
-    <br/>
-
+    
+    if ((user_name === user_data.Black || user_name === user_data.White)) {
+      return (
+        <div className="ChessBoard">
+        <Chessboard
+          id="chessBoard"
+          width={640}
+          position={gameFen}
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: "5px",
+            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+          }}
+          pieces={{
+            wK: optionWhite,
+            wQ: optionWhite,
+            wN: optionWhite,
+            wR: optionWhite,
+            wB: optionWhite,
+            wP: optionWhite,
+            bK: optionBlack,
+            bQ: optionBlack,
+            bN: optionBlack,
+            bR: optionBlack,
+            bB: optionBlack,
+            bP: optionBlack
+          }}
+          orientation={user_name === user_data.Black ? "Black" : "White"}
+        />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="ChessBoard">
+        <Chessboard
+          id="chessBoard"
+          width={640}
+          position={gameFen}
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: "5px",
+            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+          }}
+          orientation={user_name === user_data.Black ? "Black" : "White"}
+        />
+        </div>
+      )
+    }
+  }
+  
+  return (
+    <div>
+      <div>
+        {ChessGame()}
+        {chessInfo()}
+        {user_data.Black === user_name || user_data.White === user_name ? <button onClick={() => resign()}>Resign </button> : null}
+        {Chess(gameFen).in_checkmate() && (user_data.Black === user_name || user_data.White == user_name) ? <button onClick={() => replay()}>Play Again</button> : ""}
+      <br/>
+      </div>
+    
+      <div class="box">
+        <h2>Chat with other players:</h2>
+        <br/>
+        <br/>
+          <div className="chat" >
+            <Chat socket={socket} user_name={user_name} />
+          </div>
+      </div>
+    
     </div>
   );
 }

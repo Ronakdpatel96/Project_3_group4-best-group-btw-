@@ -7,6 +7,7 @@ export default function LeaderRow(props) {
   const { win } = props;
   const { loss } = props;
   const { tie } = props;
+
   return (
     <tr>
       <td>{user}</td>
@@ -14,6 +15,7 @@ export default function LeaderRow(props) {
       <td>{win}</td>
       <td>{loss}</td>
       <td>{tie}</td>
+
     </tr>
   );
 }

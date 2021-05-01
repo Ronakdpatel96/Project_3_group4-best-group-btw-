@@ -2,6 +2,7 @@ import io from 'socket.io-client';
 import React, { useState, useEffect, useRef } from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import { Login } from './login/Login';
+import { Logout } from './login/Logout';
 import './App.css';
 import Gameroom from "./gameroom/Gameroom.js";
 import Header from './components/Header.js';
@@ -15,10 +16,26 @@ function App() {
 
   const [user, setUser] = useState("");
   const [emailName, setEmail] = useState("");
-
-
-
-
+  
+  
+  useEffect(() => {
+        const loggedInUser = localStorage.getItem('username');
+        const loggedemail = localStorage.getItem('email');
+        
+        console.log("useEffect Login", loggedInUser, loggedemail);
+        
+        const is_logged_in = loggedInUser !== "" && loggedemail !== "";
+        if (is_logged_in) {
+          setUser(loggedInUser);
+          setEmail(loggedemail);
+          console.log("useEffect Login If", loggedInUser, loggedemail);
+        }
+    }, []);
+  
+  
+  
+  
+  
   return (
     <BrowserRouter>
       <Header isLoggedIn={user!==""}/>
@@ -26,7 +43,7 @@ function App() {
         <Route path='/' exact>
           <Landing />
         </Route> 
-        <Route path='/gameroom' exact>
+        <Route path='/gameroom/' exact>
           <Gameroom socket={socket} user_name={emailName}/>
         </Route>
         <Route path='/leaderboard' exact>
@@ -47,7 +64,23 @@ function App() {
             <Redirect to='/' />
         }
         </Route>
+        
+        <Route path='/logout' exact>
+          {user !== "" ? 
+            <Logout
+              setUser={setUser}
+              setEmail={setEmail}/>
+              :
+              <Redirect to='/' />
+          }
+        
+        </Route>
+        
+        <Route path='/' >
+          <Redirect to='/' />
+        </Route>
       </Switch>
+
     </BrowserRouter>
   );
 }
