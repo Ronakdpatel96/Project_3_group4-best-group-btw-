@@ -1,13 +1,18 @@
-.leaderboard {
-    background: rgb(237, 255, 253);
-    border-radius: 15px;
-    margin: 50px;
+table {
+    text-align: center;
+    font-size: large;
+    margin: auto;
+    width: 75%;
+    background-color: #edfffd;
+    color: black;
 }
 
+thead {
+    background-color: #6be3d6;
+    font-size: large;
+    color: black;
+}
 
-.leaderboard-info {
-    text-align: center;
-    color: #343434;
-    margin: 10px;
-    font-family: Helvetica, sans-serif;
+td {
+    color: black;
 }

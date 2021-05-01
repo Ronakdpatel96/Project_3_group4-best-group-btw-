@@ -18,21 +18,24 @@ export function Leaderboard({user_name, email_name, socket}) {
     }, []);
   
   return (
-    <div class="leaderboard">
-        <div class="leaderboard-info">
-            <table>
-              <thead>
-                <tr>
-                  <th colSpan="2">Leaderboard</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userlist.map((item, index) => (
-                  <LeaderRow key={index} user={item[0]} score={item[1]} win={item[2]} loss={item[3]} tie={item[4]} />
-                ))}
-              </tbody>
-            </table>
-        </div>
-    </div>
+    <table>
+      <thead>
+        <th colSpan="5">Leaderboard</th>
+      </thead>
+      <thead>
+        <tr>
+          <th colSpan="1">Name</th>
+          <th colSpan="1">Points/Rank</th>
+          <th colSpan="1">Win</th>
+          <th colSpan="1">Loss</th>
+          <th colSpan="1">Tie</th>
+        </tr>
+      </thead>
+      <tbody>
+        {userlist.map((item, index) => (
+          <LeaderRow key={index} user={item[0]} score={item[1]} win={item[2]} loss={item[3]} tie={item[4]} />
+        ))}
+      </tbody>
+    </table>
 )}
 export default Leaderboard;

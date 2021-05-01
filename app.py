@@ -25,7 +25,7 @@ class Person(DB.Model):
     win = DB.Column(DB.Integer, nullable=False)
     loss = DB.Column(DB.Integer, nullable=False)
     tie = DB.Column(DB.Integer, nullable=False)
-    rank = DB.Column(DB.Integer, nullable=False)
+    points = DB.Column(DB.Integer, nullable=False)
 
     def __repr__(self):
         return '<Person %r>' % self.username
@@ -66,13 +66,13 @@ def on_disconnect():
 @SOCKETIO.on('leaderboard')
 def on_leaderboard():
     ''' When a client enters the leaderboard page, send data '''
-    all_people = Person.query.order_by(Person.rank.desc()).all()
+    all_people = Person.query.order_by(Person.points.desc()).all()
     print(all_people)
     users = []
     for person in all_people:
         user = []
         user.append(person.username)
-        user.append(person.rank)
+        user.append(person.points)
         user.append(person.win)
         user.append(person.loss)
         user.append(person.tie)
@@ -84,7 +84,7 @@ def database_check(user, email_address):
     ''' Checks if a user is already in the database'''
     check = Person.query.filter_by(username=user).first()
     if check is None:
-        new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
+        new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, points=0)
         DB.session.add(new_user)
         DB.session.commit()
         return new_user
@@ -111,8 +111,8 @@ def on_login(data):
     stats_info.append(stats.win)
     stats_info.append(stats.loss)
     stats_info.append(stats.tie)
-    stats_info.append(stats.rank)
-    stats_info.append(add_rank_statement(stats.rank))
+    stats_info.append(stats.points)
+    stats_info.append(add_rank_statement(stats.points))
     print(stats)
     print(stats_info)
     SOCKETIO.emit('statistics', stats_info, broadcast=True, include_self=True)

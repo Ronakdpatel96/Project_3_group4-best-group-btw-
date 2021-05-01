@@ -9,7 +9,7 @@ class Person(DB.Model):
     win = DB.Column(DB.Integer, nullable=False)
     loss = DB.Column(DB.Integer, nullable=False)
     tie = DB.Column(DB.Integer, nullable=False)
-    rank = DB.Column(DB.Integer, nullable=False)
+    points = DB.Column(DB.Integer, nullable=False)
 
     def __repr__(self):
         return '<Person %r>' % self.username

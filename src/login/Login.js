@@ -30,13 +30,13 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
 
         axios.get(url)
-            .then(email => {
-                const userName = email['data']['given_name'];
-                const emailUser = email['data']['email'];
+            .then(resp => {
+                const userName = resp['data']['given_name'];
+                const emailUser = resp['data']['email'];
                 
-                console.log(email['data']['given_name']);
+                console.log(resp['data']['given_name']);
                 console.log("userName",userName);
-                console.log(email['data']['email']);
+                console.log(resp['data']['email']);
                 console.log("emailUser",emailUser);
                 
                 setUser(setName => userName);

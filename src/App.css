@@ -48,7 +48,7 @@ html, body {
 
 .title {
   text-align: center;
-  color: rgb(237, 255, 253);
+  color: #edfffd;
   text-shadow: 2px 2px #707070;
   font-weight: Bold;
   font-size: 100px;
@@ -61,7 +61,7 @@ html, body {
 }
 
 .text-holder {
-  background: rgb(237, 255, 253);
+  background: #edfffd;
   width: auto;
   height: auto;
   padding: 20px;
@@ -74,7 +74,7 @@ h1 {
 }
 
 h2 {
-  color: rgb(237, 255, 253);
+  color: #edfffd;
   margin: 10px;
   text-shadow: 1.5px 1.5px #545454;
   font-family: Helvetica, sans-serif;
