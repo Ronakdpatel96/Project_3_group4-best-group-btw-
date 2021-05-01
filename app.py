@@ -62,6 +62,23 @@ def on_connect():
 def on_disconnect():
     ''' When a client disconnects from this Socket connection, this function is run '''
     print('User disconnected!')
+    
+@SOCKETIO.on('leaderboard')
+def on_leaderboard():
+    ''' When a client enters the leaderboard page, send data '''
+    all_people = Person.query.order_by(Person.rank.desc()).all()
+    print(all_people)
+    users = []
+    for person in all_people:
+        user = []
+        user.append(person.username)
+        user.append(person.rank)
+        user.append(person.win)
+        user.append(person.loss)
+        user.append(person.tie)
+        users.append(user)
+    print(users)
+    SOCKETIO.emit('leaderboard', users, broadcast=True, include_self=True)
 
 def database_check(user, email_address):
     ''' Checks if a user is already in the database'''

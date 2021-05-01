@@ -24,7 +24,6 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         console.log(user);
         console.log(emailName);         //User and email would be used to update the database.
         console.log("Time to change page"); //will have to link this to switchPage to try and switch the page to the next one
-        socket.emit('login', { user: user , email: emailName});
         setLogin(false);
     }
         
@@ -36,27 +35,21 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
         const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + response['tokenId'];
 
         axios.get(url)
-            .then(name => { 
-                const userName = name['data']['given_name'];
-                localStorage.setItem('username', userName);
-                console.log(name['data']['given_name']);
+            .then(resp => {
+                const userName = resp['data']['given_name'];
+                const emailUser = resp['data']['email'];
+                
+                console.log(resp['data']['given_name']);
                 console.log("userName",userName);
-                setUser(setName => userName);
-            });
-            
-            
-        axios.get(url)
-            .then(email => {
-                const emailUser = email['data']['email'];
-                localStorage.setItem('email', emailUser);
-                
-                
-                console.log(email['data']['email']);
+                console.log(resp['data']['email']);
                 console.log("emailUser",emailUser);
                 
+                setUser(setName => userName);
                 setEmail(setName => emailUser);
                 setLogin(true);
                 setPage(true);
+                
+                socket.emit('login', { user: userName , email: emailUser});
             });
             
         //Need to change the webpage to the next page once logged in
