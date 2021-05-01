@@ -158,11 +158,20 @@ def on_chat(data):
     
 
 # Event that will update the two users' databases after a game has ended
+# data = ["win": "player1@gmail.com", "lose": "player2@njit.edu"]
 @SOCKETIO.on('finish')
-def on_finish():
+def on_finish(data):
     ''' Will update record once game has finished '''
-    print('The game has ended')
+    print('on_finish ', data)
     
+@SOCKETIO.on('draw')
+# for draw, data will be list of emails of two users who played
+# ex: data = ["Player1@njit.edu", "Player2@gmail.com"]
+def on_draw(data):
+    print("on draw ", data)
+
+    
+
 @SOCKETIO.on('move')
 def on_move(data):
     print(data)

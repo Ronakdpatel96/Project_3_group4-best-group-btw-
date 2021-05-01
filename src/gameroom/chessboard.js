@@ -1,24 +1,13 @@
-import React, { useState,  useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
 import './chessboard.css';
 import Chat from "./chat.js";
 
 export default function BlindChess({user_data, socket, user_name}) {
-  const [username, setUsername] = useState("");
   const [gameFen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   const [history, setHistory] = useState([]);
-  
-  const inputRef = useRef(null);
 
-  function onClickButton() {
-    if (inputRef != null && inputRef.current.value != "") {
-      const userName = inputRef.current.value;
-      setUsername(prev => userName);
-    }
-  }
-  
-  
   useEffect(() => {
     socket.on("move", (data) => {
       
@@ -39,7 +28,7 @@ export default function BlindChess({user_data, socket, user_name}) {
             src={WhiteImage}
             alt={"whitepieces"}
           />
-        )
+        );
         
   const optionBlack =  ({ squareWidth, isDragging }) => (
           <img
@@ -50,7 +39,7 @@ export default function BlindChess({user_data, socket, user_name}) {
             src={BlackImage}
             alt={"blackpieces"}
           />
-        )
+        );
 
   const onDrop = ({ sourceSquare, targetSquare }) => {
     if (sourceSquare === targetSquare) {
@@ -91,7 +80,7 @@ export default function BlindChess({user_data, socket, user_name}) {
       alert("You lose due to illegal move", sourceSquare, targetSquare);
       console.log("illegal move");
       return;
-    };
+    }
     
     
     
@@ -142,15 +131,19 @@ export default function BlindChess({user_data, socket, user_name}) {
     if (game.in_checkmate()) {
       if (turn == "Black") {
         GameInfo="White won by checkmate";
+        socket.emit('finish', {win: user_data.White, lose: user_data.Black});
       }
       else {
         GameInfo="Black won by checkmate";
+        socket.emit('finish', {win: user_data.Black, lose: user_data.White});
       }
     }
     else if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
+      socket.emit('draw', [user_data.White, user_data.Black]);
       GameInfo="Draw by stalemate";
     }
     else if (game.insufficient_material()) {
+      socket.emit('draw', [user_data.White, user_data.Black]);
       GameInfo="Draw by insufficient material";
     }
     else {
