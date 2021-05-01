@@ -24,15 +24,18 @@ function App() {
         
         console.log("useEffect Login", loggedInUser, loggedemail);
         
-        const is_logged_in = user !== "" && emailName !== "";
+        const is_logged_in = loggedInUser !== "" && loggedemail !== "";
         if (is_logged_in) {
           setUser(loggedInUser);
           setEmail(loggedemail);
-          <Redirect to='/' />;
-          //socket.emit('login', { user: loggedInUser , email: loggedemail});
+          console.log("useEffect Login If", loggedInUser, loggedemail);
         }
     }, []);
-
+  
+  
+  
+  
+  
   return (
     <BrowserRouter>
       <Header isLoggedIn={user!==""}/>

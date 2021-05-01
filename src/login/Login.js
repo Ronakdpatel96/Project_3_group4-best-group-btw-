@@ -73,8 +73,7 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
             <script src="https://apis.google.com/js/platform.js" async defer></script>
             <div>
                 <div class="google">
-                    <h3>Login to play:</h3>
-                        <br/>
+                        <br/><br/><br/>
                         <GoogleLogin
                             buttonText="Login with Google"
                             onSuccess={responseGoogle}
