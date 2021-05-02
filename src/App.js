@@ -24,8 +24,7 @@ function App() {
         
         console.log("useEffect Login", loggedInUser, loggedemail);
         
-        const is_logged_in = loggedInUser !== "" && loggedemail !== "";
-        if (is_logged_in) {
+        if (loggedInUser && loggedemail) {
           setUser(loggedInUser);
           setEmail(loggedemail);
           console.log("useEffect Login If", loggedInUser, loggedemail);
