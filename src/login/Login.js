@@ -49,6 +49,9 @@ export function Login({ socket, user, setUser, emailName, setEmail }) {
                 setLogin(true);
                 setPage(true);
                 
+                localStorage.setItem("username", userName);
+                localStorage.setItem("email", emailUser);
+                
                 socket.emit('login', { user: userName , email: emailUser});
             });
             
