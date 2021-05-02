@@ -47,6 +47,11 @@ PlayerE = []
                     
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
+@APP.route('/leaderboard')
+@APP.route('/profile')
+@APP.route('/gameroom')
+@APP.route('/logout')
+@APP.route('/login')
 
 def index(filename):
     ''' Gets the html file used for this function '''
