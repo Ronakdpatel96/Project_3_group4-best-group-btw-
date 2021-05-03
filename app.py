@@ -47,12 +47,6 @@ PlayerE = []
                     
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
-@APP.route('/leaderboard', defaults={"filename": "index.html"})
-@APP.route('/profile', defaults={"filename": "index.html"})
-@APP.route('/gameroom', defaults={"filename": "index.html"})
-@APP.route('/logout', defaults={"filename": "index.html"})
-@APP.route('/login', defaults={"filename": "index.html"})
-
 def index(filename):
     ''' Gets the html file used for this function '''
     return send_from_directory('./build', filename)
