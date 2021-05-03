@@ -1,0 +1,19 @@
+table {
+    text-align: center;
+    font-size: large;
+    margin: auto;
+    width: 75%;
+    background-color: #edfffd;
+    color: black;
+}
+
+thead {
+    background-color: #6be3d6;
+    font-size: large;
+    color: black;
+}
+
+td {
+    color: black;
+}
+

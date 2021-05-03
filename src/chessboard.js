@@ -16,10 +16,6 @@ export default function BlindChess({user_data, socket, user_name}) {
     }
   }
   */
-  
-  console.log("Username", user_name);
-  console.log("userData", user_data);
-  
   useEffect(() => {
     socket.on("move", (data) => {
       
@@ -57,18 +53,39 @@ export default function BlindChess({user_data, socket, user_name}) {
     if (sourceSquare === targetSquare) {
       return;
     }
+    //console.log("User_data " , user_data);
     
-    console.log(sourceSquare, targetSquare);
+    if (user_data.Black !== user_name && user_data.White !== user_name) {
+      return;
+    }
+    
+    //console.log(sourceSquare, targetSquare);
     const game = new Chess(gameFen);
     // see if the move is legal
+    
+    if (game.in_checkmate()) {
+      return;
+    }
+    
+    const turn = game.fen() === "start" || game.fen().search(/w/) !== -1 ? "White": "Black";
+    
+    if (user_name === user_data.White && turn != "White") {
+      return;
+    }
+    if (user_name === user_data.Black && turn != "Black") {
+      return;
+    }
+    
     let move = game.move({
       from: sourceSquare,
       to: targetSquare,
       promotion: "q" // always promote to a queen for example simplicity
     });
+    
+    
     // illegal move
     if (move === null) {
-      //alert("You lose due to illegal move");
+      alert("You lose due to illegal move", sourceSquare, targetSquare);
       console.log("illegal move");
       return;
     };
@@ -136,8 +153,25 @@ export default function BlindChess({user_data, socket, user_name}) {
     else {
       GameInfo=turn + " to Play";
     }
+    
+    let Role="";
+    
+    if (user_name === user_data.White ) {
+      Role = "White";
+    }
+    else if (user_name === user_data.Black ) {
+      Role = "Black";
+    }
+    else {
+      Role = "Spectator";
+    }
+    
+    
+    
+    
     return (<div className="chessInfo">
       <h1> {GameInfo} </h1>
+      <h1> {user_name} (You) are playing as {Role}</h1>
       <ol> {list_moves.map((move) => <li>{move}</li>)} </ol>
       
       </div>
@@ -150,12 +184,12 @@ export default function BlindChess({user_data, socket, user_name}) {
     }
     
     
-    if (user_name == "White") {
+    if (user_name == user_data.White) {
       setFen("rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3");
       const data = { FEN: "rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3" , history: []};
       socket.emit('move', data);
     }
-    else if (user_name == "Black") {
+    else if (user_name == user_data.Black) {
       setFen("rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3");
       const data = { FEN: "rnbqkbnr/ppppp2p/8/5ppQ/4P3/P7/1PPP1PPP/RNB1KBNR b KQkq - 1 3" , history: []};
      socket.emit('move', data);
@@ -166,13 +200,20 @@ export default function BlindChess({user_data, socket, user_name}) {
   }
   
   function replay() {
+    
+    if (!(user_data.Black == user_name || user_data.White == user_name)) {
+      return;
+    }
     setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     setHistory([]); 
     const data = { FEN: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" , history: []};
     socket.emit('move', data);
   }
   
-  return (<div>
+
+  
+  
+  return (<div className="ChessBoard">
     <Chessboard
       id="chessBoard"
       width={640}
@@ -196,15 +237,15 @@ export default function BlindChess({user_data, socket, user_name}) {
         bB: optionBlack,
         bP: optionBlack
       }}
-      orientation={user_name}
+      orientation={user_name === user_data.Black ? "Black" : "White"}
     />
     
     {chessInfo()}
-    <button onClick={() => resign()}>Resign </button>
-    {Chess(gameFen).in_checkmate() ? <button onClick={() => replay()}>Play Again</button> : ""}
+    {user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => resign()}>Resign </button> : null}
+    {Chess(gameFen).in_checkmate() && user_data.Black == user_name || user_data.White == user_name ? <button onClick={() => replay()}>Play Again</button> : ""}
     
     <br/>
-    Playing as {user_name}
+
     </div>
   );
 }

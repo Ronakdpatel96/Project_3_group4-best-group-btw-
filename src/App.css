@@ -48,7 +48,7 @@ html, body {
 
 .title {
   text-align: center;
-  color: rgb(237, 255, 253);
+  color: #edfffd;
   text-shadow: 2px 2px #707070;
   font-weight: Bold;
   font-size: 100px;
@@ -61,7 +61,7 @@ html, body {
 }
 
 .text-holder {
-  background: rgb(237, 255, 253);
+  background: #edfffd;
   width: auto;
   height: auto;
   padding: 20px;
@@ -74,7 +74,7 @@ h1 {
 }
 
 h2 {
-  color: rgb(237, 255, 253);
+  color: #edfffd;
   margin: 10px;
   text-shadow: 1.5px 1.5px #545454;
   font-family: Helvetica, sans-serif;
@@ -94,6 +94,7 @@ h2 {
   font-size: xxx-large;
   text-shadow: 2px 2px #a1a1a1;
   font-family: Helvetica, sans-serif;
+  color: #343434;
 }
 
 .about {
@@ -117,7 +118,7 @@ h2 {
 img {
   animation: fadeIn 1s;
   border-radius: 15px;
-  margin: 10px;
+  margin: 0px;
   height: 350px;
   transition-timing-function: ease;
   transition: width 2s, height 2s, transform 2s;
@@ -226,6 +227,9 @@ body{
   justify-content: flex-end
 }
 
+.box{
+  Text-align:right;
+}
 
 .board{
   text-align:center;
@@ -236,4 +240,8 @@ body{
   width: 500px;
   display: flex;
   justify-content: space-evenly;
+}
+
+.join {
+  margin: 10px;
 }
