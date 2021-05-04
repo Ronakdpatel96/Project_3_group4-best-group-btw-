@@ -39,13 +39,13 @@ function App() {
           <Landing />
         </Route>
         <Route path="/gameroom/" exact>
-          <Gameroom socket={socket} user_name={emailName} />
+          <Gameroom socket={socket} userName={emailName} />
         </Route>
         <Route path="/leaderboard" exact>
-          <Leaderboard socket={socket} user_name={user} email_name={emailName} />
+          <Leaderboard socket={socket} userName={user} emailName={emailName} />
         </Route>
         <Route path="/profile" exact>
-          <Profile username={user} email={emailName} socket={socket} />
+          <Profile username={user} emailName={emailName} socket={socket} />
         </Route>
         <Route path="/login" exact>
           {user === ''

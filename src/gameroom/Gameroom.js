@@ -1,62 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import BlindChess from './chessboard.js';
-import Chat from './chat.js';
-/* eslint-disable */
-export function Gameroom({socket, user_name}) {
-    
-    
-    const [ join, setJoin ] = useState(false);
-    const [ user_data, setUserData ] = useState([]);
-    
-    useEffect( () => {
-        socket.on("on_join", (data) => {
-            console.log("on_join mount ", data);
-            setUserData(data);
-        });
+import PropTypes from 'prop-types';
+import BlindChess from './chessboard';
+
+export function Gameroom({ socket, userName }) {
+  const [join, setJoin] = useState(false);
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    socket.on('on_join', (data) => {
+      console.log('on_join mount ', data);
+      setUserData(data);
+    });
+  },
+  []);
+
+  useEffect(() => {
+    socket.on('on_join', (data) => {
+      console.log('on_join mount ', data);
+      setUserData(data);
+    });
+  }, [userData]);
+
+  function onClickJoin() {
+    setJoin((prev) => !prev);
+    console.log('on click join ', userName);
+
+    if (!userData.includes(userName)) {
+      userData.push(userName);
     }
-    , [] );
-    
-    useEffect ( () => {
-        socket.on("on_join", (data) => {
-            console.log("on_join mount ", data);
-            setUserData(data);
-        });
-    }, [user_data]);
-    
-    
-    function onClickJoin () {
-        setJoin((prev) => !prev);
-        console.log("on click join " , user_name);   
-        
-        
-        if (!user_data.includes(user_name)) {
-            user_data.push(user_name);
-        }
-        
-        const new_user_data = user_data;
-        setUserData(new_user_data);
-        socket.emit('on_join', new_user_data);
+
+    const newUserData = userData;
+    setUserData(newUserData);
+    socket.emit('on_join', newUserData);
+  }
+
+  function gameStart() {
+    if (!join) {
+      return <button type="button" onClick={() => onClickJoin()} className="join"> Click to Join </button>;
     }
-    
-    function gameStart() {
-        if (!join) {
-            return <button onClick={() => onClickJoin()} class="join"> Click to Join </button>;
-        }
-        
-        if (user_data.length < 2) {
-            return <h2>Waiting for other user to join</h2>;
-        }
-        
-        const prop_data = {White: user_data[0], Black: user_data[1], Spectator: user_data.slice(2)}
-        //<Redirect to = {"/game/" + this.state.gameId}><button className="btn btn-success" style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px"}}>Start Game</button></Redirect>
-        return <BlindChess socket={socket} user_name={user_name} user_data={prop_data}/>;
+
+    if (userData.length < 2) {
+      return <h2>Waiting for other user to join</h2>;
     }
-    
-    
-    return (
+
+    const propData = { White: userData[0], Black: userData[1], Spectator: userData.slice(2) };
+    // <Redirect to = {"/game/" + this.state.gameId}><button className="btn btn-success"
+    // style = {{marginLeft: String((window.innerWidth / 2) - 60) + "px", width: "120px"}}>
+    // Start Game</button></Redirect>
+    return <BlindChess socket={socket} userName={userName} userData={propData} />;
+  }
+
+  return (
     <div>
       {gameStart()}
     </div>
-    );
+  );
 }
 export default Gameroom;
+
+Gameroom.propTypes = {
+  socket: PropTypes.func,
+  userName: PropTypes.string,
+};
+
+Gameroom.defaultProps = {
+  socket: () => {},
+  userName: '',
+};

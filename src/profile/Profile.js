@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../App.css';
 
-function Profile({ socket, username, email }) {
+function Profile({ socket, username, emailName }) {
   const [shown, setShown] = useState(false);
   const [stats, setStats] = useState([]);
 
   function showStats() {
     if (!shown) {
-      const data = { user: username, email: email };
+      const data = { user: username, email: emailName };
       console.log('showStats', data);
       socket.emit('profile', data);
     }
@@ -60,11 +60,11 @@ export default Profile;
 Profile.propTypes = {
   socket: PropTypes.func,
   username: PropTypes.string,
-  emailname: PropTypes.string,
+  emailName: PropTypes.string,
 };
 
 Profile.defaultProps = {
   socket: () => {},
   username: '',
-  emailname: '',
+  emailName: '',
 };
