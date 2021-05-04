@@ -178,12 +178,26 @@ def on_chat(data):
 def on_finish(data):
     ''' Will update record once game has finished '''
     print('on_finish ', data)
+    win_user = Person.query.filter_by(email=data['win']).first()
+    lose_user = Person.query.filter_by(email=data['lose']).first()
+    win_user.win = win_user.win + 1
+    lose_user.loss = lose_user.loss + 1
+    win_user.rank = win_user.rank + 2
+    lose_user.rank = lose_user.rank - 1
+    DB.session.commit()
     
 @SOCKETIO.on('draw')
 # for draw, data will be list of emails of two users who played
 # ex: data = ["Player1@njit.edu", "Player2@gmail.com"]
 def on_draw(data):
     print("on draw ", data)
+    user1 = Person.query.filter_by(email=data[0]).first()
+    user2 = Person.query.filter_by(email=data[1]).first()
+    user1.tie = user1.tie + 1
+    user2.tie = user2.tie + 1
+    user1.rank = user1.rank + 1
+    user2.rank = user2.rank + 1
+    DB.session.commit()
 
     
 
