@@ -15,7 +15,7 @@ function Header({ isLoggedIn }) {
         </li>
         { isLoggedIn
           ? (
-            <div>
+            <>
               <li>
                 <Link to="/gameroom">Game Room</Link>
               </li>
@@ -28,7 +28,7 @@ function Header({ isLoggedIn }) {
               <li>
                 <Link to="/logout">Log out</Link>
               </li>
-            </div>
+            </>
           )
           : <li><Link to="/login">Log In</Link></li> }
       </ul>
