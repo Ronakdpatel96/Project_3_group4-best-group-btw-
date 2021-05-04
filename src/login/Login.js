@@ -80,7 +80,6 @@ export function Login({
 
 export default Login;
 
-// socket, user, setUser, emailName, setEmail
 Login.propTypes = {
   socket: PropTypes.func,
   user: PropTypes.string,
