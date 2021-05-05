@@ -6,6 +6,8 @@
     "allowImportExportEverywhere" : true
   },
   "rules" : {
+      "no-console": "off",
+      "no-alert": "off",
       "no-unused-vars" : "off",
       "no-undef" : "off",
       "prefer-destructuring" : "off",
