@@ -34,5 +34,5 @@ jobs:
     - run: npm install eslint-plugin-react-hooks --save-dev
     - run: npm install eslint-plugin-jsx-a11y --save-dev
     - run: touch .eslintrc.json
-    - run: echo '{"extends":"airbnb", "rules":{"react/jsx-filename-extension":"off","react/no-array-index-key":"off","react-hooks/exhaustive-deps":"off"}}' > .eslintrc.json
+    - run: echo '{"extends":"airbnb", "parser":"babel-eslint", "parserOptions":{"sourceType":"module", "allowImportExportEverywhere":true}, "rules":{"react/jsx-filename-extension":"off","react/no-array-index-key":"off","react-hooks/exhaustive-deps":"off","import/no-named-as-default":"off","no-unused-vars":"off","no-undef":"off","prefer-destructuring":"off"}}' > .eslintrc.json
     - run: npx eslint src/
