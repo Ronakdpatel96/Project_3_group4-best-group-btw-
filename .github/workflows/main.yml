@@ -48,3 +48,6 @@ jobs:
         
       - name: Lint files
         run: pylint app.py
+        
+      - name: Run tests
+        run: python -m unittest
