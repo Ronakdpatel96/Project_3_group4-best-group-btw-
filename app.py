@@ -219,6 +219,10 @@ def on_finish(data):
     win_user.rank = win_user.rank + 2
     lose_user.rank = lose_user.rank - 1
     DB.session.commit()
+    
+def on_finish_test(data):
+    ''' Updates the score on game end '''
+    return('on_finish ', data)
 
 @SOCKETIO.on('draw')
 # for draw, data will be list of emails of two users who played
