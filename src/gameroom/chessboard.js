@@ -85,7 +85,7 @@ export default function BlindChess({ userData, socket, userName }) {
     let moveString = game.pgn().replace('[SetUp "1"]', '').replace(/\s*\[.*?\]\s*/g, '');
 
     if (moveString.includes('...')) {
-      // console.log(moveString.split("...")[1]);
+      // console.log(moveString.split('...')[1]);
       moveString = moveString.split('...')[1];
     } else {
       // console.log(moveString);

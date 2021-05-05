@@ -8,12 +8,12 @@ import React, { useState, useEffect } from 'react';
 export function Login({
   socket, user, setUser, emailName, setEmail,
 }) {
-  const [Login, setLogin] = useState(false);
+  const [userLogin, setUserLogin] = useState(false);
 
   useEffect(() => {
     const isLoggedIn = user !== '' && emailName !== '';
     if (isLoggedIn) {
-      setLogin(true);
+      setUserLogin(true);
     }
   }, []);
 
@@ -22,7 +22,7 @@ export function Login({
     console.log(user);
     console.log(emailName); // User and email would be used to update the database.
     console.log('Time to change page'); // will have to link this to switchPage to try and switch the page to the next one
-    setLogin(false);
+    setUserLogin(false);
   }
 
   const responseGoogle = (response) => {
@@ -43,7 +43,7 @@ export function Login({
 
         setUser((setName) => userName);
         setEmail((setName) => emailUser);
-        setLogin(true);
+        setUserLogin(true);
 
         localStorage.setItem('username', userName);
         localStorage.setItem('email', emailUser);
