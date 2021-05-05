@@ -23,9 +23,15 @@ export default function LeaderRow(props) {
 LeaderRow.propTypes = {
   user: PropTypes.string,
   score: PropTypes.number,
+  win: PropTypes.number,
+  loss: PropTypes.number,
+  tie: PropTypes.number,
 };
 
 LeaderRow.defaultProps = {
   user: '',
   score: 0,
+  win: 0,
+  loss: 0,
+  tie: 0,
 };

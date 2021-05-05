@@ -38,15 +38,16 @@ SOCKETIO = SocketIO(APP,
                     json=json,
                     manage_session=False)
 
-Spectators = []
-Players = []
-LoginName = []
-LoginEmail = []
-userName = []
-PlayerE = []
-                    
+SPECTATORS = []
+PLAYERS = []
+LOGINNAME = []
+LOGINEMAIL = []
+USERNAME = []
+PLAYERSEMAIL = []
+
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
+
 def index(filename):
     ''' Gets the html file used for this function '''
     return send_from_directory('./build', filename)
@@ -61,7 +62,7 @@ def on_connect():
 def on_disconnect():
     ''' When a client disconnects from this Socket connection, this function is run '''
     print('User disconnected!')
-    
+
 @SOCKETIO.on('leaderboard')
 def on_leaderboard():
     ''' When a client enters the leaderboard page, send data '''
@@ -122,12 +123,13 @@ def add_rank_statement(rank):
     ''' Page tells the user how they are doing '''
     if rank == 0:
         return "Just starting out."
-    elif rank > 0 and rank < 10:
+    if 0 < rank < 10:
         return "Got a few wins to your name"
-    elif rank > 10 and rank < 35:
+    if 10 <= rank < 35:
         return "Getting really good at the game now"
-    elif rank > 35:
+    if rank >= 35:
         return "You are a champion!"
+    return "Need some work"
 
 @SOCKETIO.on('login')
 def on_login(data):
@@ -147,6 +149,7 @@ def on_login(data):
 
 @SOCKETIO.on('profile')
 def on_profile(data):
+    ''' Function called when user enters profile page '''
     print("profile ", data)
     stats = database_check(data['user'], data['email'])
     stats_info = []
@@ -164,68 +167,84 @@ def on_profile(data):
 
 @SOCKETIO.on('joined')
 def players(data):
+    ''' Function runs when a player logs in '''
     #global LoginName
     #global LoginEmail
-    global Players
-    global PlayerE
-    global userName
-    global Spectators
-    
+    global PLAYERS
+    global PLAYERSEMAIL
+    global USERNAME
+    global SPECTATORS
+
     email = data['email']
     user = email.split('@')[0]
-    
-    if user not in userName:
-        userName.append(user)
+
+    if user not in USERNAME:
+        USERNAME.append(user)
         #LoginEmail.append(str(data['email']))
         #LoginName.append(str(data['user']))
-        if len(Players) < 2:
-            Players.append(str(data['user']))
-            PlayerE.append(str(data['email']))
-            
+        if len(PLAYERS) < 2:
+            PLAYERS.append(str(data['user']))
+            PLAYERSEMAIL.append(str(data['email']))
+
         else:
-            Spectators.append((str(data['user'])))
-            
-            
-    print(Players)
-    print(Spectators)
+            SPECTATORS.append((str(data['user'])))
+
+
+    print(PLAYERS)
+    print(SPECTATORS)
     #print(LoginName)
-    
-    SOCKETIO.emit('Emails', PlayerE, broadcast=True, include_self=True)
-    SOCKETIO.emit('Players', Players, broadcast=True, include_self=True)
-    SOCKETIO.emit('Spectators', Spectators, broadcast=True, include_self=True)
+
+    SOCKETIO.emit('Emails', PLAYERSEMAIL, broadcast=True, include_self=True)
+    SOCKETIO.emit('Players', PLAYERS, broadcast=True, include_self=True)
+    SOCKETIO.emit('Spectators', SPECTATORS, broadcast=True, include_self=True)
 
 
 @SOCKETIO.on('chat')
 def on_chat(data):
+    ''' Updates chat messages when message is sent '''
     print(data)
     SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
+
 
 # Event that will update the two users' databases after a game has ended
 # data = ["win": "player1@gmail.com", "lose": "player2@njit.edu"]
 @SOCKETIO.on('finish')
 def on_finish(data):
-    ''' Will update record once game has finished '''
+    ''' Updates the score on game end '''
     print('on_finish ', data)
-    
-def on_finish_test(data):
-    ''' Will update record once game has finished '''
-    return('on_finish ', data)
-    
+    win_user = Person.query.filter_by(email=data['win']).first()
+    lose_user = Person.query.filter_by(email=data['lose']).first()
+    win_user.win = win_user.win + 1
+    lose_user.loss = lose_user.loss + 1
+    win_user.rank = win_user.rank + 2
+    lose_user.rank = lose_user.rank - 1
+    DB.session.commit()
+
 @SOCKETIO.on('draw')
 # for draw, data will be list of emails of two users who played
 # ex: data = ["Player1@njit.edu", "Player2@gmail.com"]
 def on_draw(data):
+    ''' Updates the score on a draw '''
     print("on draw ", data)
+    user1 = Person.query.filter_by(email=data[0]).first()
+    user2 = Person.query.filter_by(email=data[1]).first()
+    user1.tie = user1.tie + 1
+    user2.tie = user2.tie + 1
+    user1.rank = user1.rank + 1
+    user2.rank = user2.rank + 1
+    DB.session.commit()
 
-    
+
 
 @SOCKETIO.on('move')
 def on_move(data):
+    ''' Updates the list of moves made in a game '''
     print(data)
     SOCKETIO.emit('move', data, broadcast=True, include_self=True)
 
 @SOCKETIO.on('on_join')
 def on_join(data):
+    ''' Updates on join when player clicks game button'''
     print("on_join ", data)
     SOCKETIO.emit('on_join', data, broadcast=True, include_self=True)
 
