@@ -68,7 +68,7 @@ def on_leaderboard():
     ''' When a client enters the leaderboard page, send data '''
     users = print_users()
     SOCKETIO.emit('leaderboard', users, broadcast=True, include_self=True)
-    
+
 def print_users():
     ''' When a client enters the leaderboard page, send data '''
     all_people = Person.query.order_by(Person.rank.desc()).all()
@@ -84,8 +84,9 @@ def print_users():
         users.append(user)
     print(users)
     return users
-    
+
 def print_users_mock():
+    '''Mock function for unit test'''
     all_people = Person.query.all()
     print(all_people)
     users = []
@@ -109,8 +110,9 @@ def database_check(user, email_address):
         DB.session.commit()
         return new_user
     return check
-    
+
 def database_check_mock(user, email_address):
+    '''Mock funcion for unit test'''
     check = Person.query.first()
     if check is None:
         new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
@@ -118,7 +120,7 @@ def database_check_mock(user, email_address):
         DB.session.commit()
         return new_user
     return check.username
-    
+
 def add_rank_statement(rank):
     ''' Page tells the user how they are doing '''
     if rank == 0:
@@ -219,7 +221,7 @@ def on_finish(data):
     win_user.rank = win_user.rank + 2
     lose_user.rank = lose_user.rank - 1
     DB.session.commit()
-    
+
 def on_finish_test(data):
     ''' Updates the score on game end '''
     return('on_finish ', data)
