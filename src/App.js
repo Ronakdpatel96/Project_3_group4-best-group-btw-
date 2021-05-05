@@ -22,12 +22,9 @@ function App() {
         const loggedInUser = localStorage.getItem('username');
         const loggedemail = localStorage.getItem('email');
         
-        console.log("useEffect Login", loggedInUser, loggedemail);
-        
         if (loggedInUser && loggedemail) {
           setUser(loggedInUser);
           setEmail(loggedemail);
-          console.log("useEffect Login If", loggedInUser, loggedemail);
         }
     }, []);
   

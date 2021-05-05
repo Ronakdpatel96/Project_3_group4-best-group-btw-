@@ -65,6 +65,11 @@ def on_disconnect():
 @SOCKETIO.on('leaderboard')
 def on_leaderboard():
     ''' When a client enters the leaderboard page, send data '''
+    users = print_users()
+    SOCKETIO.emit('leaderboard', users, broadcast=True, include_self=True)
+    
+def print_users():
+    ''' When a client enters the leaderboard page, send data '''
     all_people = Person.query.order_by(Person.rank.desc()).all()
     print(all_people)
     users = []
@@ -77,7 +82,22 @@ def on_leaderboard():
         user.append(person.tie)
         users.append(user)
     print(users)
-    SOCKETIO.emit('leaderboard', users, broadcast=True, include_self=True)
+    return users
+    
+def print_users_mock():
+    all_people = Person.query.all()
+    print(all_people)
+    users = []
+    for person in all_people:
+        user = []
+        user.append(person.username)
+        user.append(person.rank)
+        user.append(person.win)
+        user.append(person.loss)
+        user.append(person.tie)
+        users.append(user)
+    print(users)
+    return users
 
 def database_check(user, email_address):
     ''' Checks if a user is already in the database'''
@@ -88,6 +108,15 @@ def database_check(user, email_address):
         DB.session.commit()
         return new_user
     return check
+    
+def database_check_mock(user, email_address):
+    check = Person.query.first()
+    if check is None:
+        new_user = Person(username=user, email=email_address, win=0, loss=0, tie=0, rank=0)
+        DB.session.add(new_user)
+        DB.session.commit()
+        return new_user
+    return check.username
     
 def add_rank_statement(rank):
     ''' Page tells the user how they are doing '''
@@ -170,7 +199,6 @@ def players(data):
 def on_chat(data):
     print(data)
     SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
-    
 
 # Event that will update the two users' databases after a game has ended
 # data = ["win": "player1@gmail.com", "lose": "player2@njit.edu"]
@@ -178,6 +206,10 @@ def on_chat(data):
 def on_finish(data):
     ''' Will update record once game has finished '''
     print('on_finish ', data)
+    
+def on_finish_test(data):
+    ''' Will update record once game has finished '''
+    return('on_finish ', data)
     
 @SOCKETIO.on('draw')
 # for draw, data will be list of emails of two users who played

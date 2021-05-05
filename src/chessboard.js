@@ -1,7 +1,7 @@
 import React, { useState,  useRef, useEffect } from "react";
 import Chess  from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import Chessboard from "chessboardjsx";
-import './chessboard.css';
+import './src/gameroom/chessboard.css';
 
 export default function BlindChess({user_data, socket, user_name}) {
   const [username, setUsername] = useState("");
